@@ -1,0 +1,12 @@
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+
+level:
+  org.springframework.transaction.interceptor: TRACE
+  org.springframework.jdbc.datasource.DataSourceTransactionManager: DEBUG
+  org.springframework.orm.jpa.JpaTransactionManager: DEBUG
+  org.hibernate.resource.transaction: DEBUG
+  org.hibernate.SQL: DEBUG

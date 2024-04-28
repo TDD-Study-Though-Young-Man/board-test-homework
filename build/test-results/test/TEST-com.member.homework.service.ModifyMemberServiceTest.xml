@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.member.homework.service.ModifyMemberServiceTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-04-27T02:21:33" hostname="seominjaeui-Macmini.local" time="0.321">
+  <properties/>
+  <testcase name="사용자가 중복된 ID로 회원 정보를 수정하려고 시도하면 수정이 실패해야 한다." classname="com.member.homework.service.ModifyMemberServiceTest" time="0.084"/>
+  <testcase name="사용자가 회원 정보 수정을 시도하면 정보가 수정되어야 한다." classname="com.member.homework.service.ModifyMemberServiceTest" time="0.237"/>
+  <system-out><![CDATA[2024-04-27T11:21:33.714+09:00  INFO 10518 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.member.homework.service.ModifyMemberServiceTest]: ModifyMemberServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-04-27T11:21:33.715+09:00  INFO 10518 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.member.homework.HomeworkApplication for test class com.member.homework.service.ModifyMemberServiceTest
+Hibernate: insert into member_role (member_id,mod_date,reg_date,role_id,member_role_id) values (?,?,?,?,default)
+Hibernate: insert into role (mod_date,reg_date,role_name,role_id) values (?,?,?,default)
+Hibernate: insert into member (id,mod_date,name,password,reg_date,member_id) values (?,?,?,?,?,default)
+Hibernate: select m1_0.member_id from member m1_0 where m1_0.id=? fetch first ? rows only
+Hibernate: insert into member_role (member_id,mod_date,reg_date,role_id,member_role_id) values (?,?,?,?,default)
+Hibernate: insert into role (mod_date,reg_date,role_name,role_id) values (?,?,?,default)
+Hibernate: insert into member (id,mod_date,name,password,reg_date,member_id) values (?,?,?,?,?,default)
+Hibernate: select m1_0.member_id from member m1_0 where m1_0.id=? fetch first ? rows only
+Hibernate: update member_role set member_id=?,mod_date=?,reg_date=?,role_id=? where member_role_id=?
+Hibernate: update member set id=?,mod_date=?,name=?,password=?,reg_date=? where member_id=?
+Hibernate: select m1_0.member_id,m1_0.id,m1_0.mod_date,m1_0.name,m1_0.password,m1_0.reg_date from member m1_0 where m1_0.id=?
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
