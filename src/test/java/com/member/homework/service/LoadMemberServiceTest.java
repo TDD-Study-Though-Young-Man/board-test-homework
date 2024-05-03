@@ -1,6 +1,7 @@
 package com.member.homework.service;
 
 import com.member.homework.domain.Member;
+import com.member.homework.dto.response.MemberDto;
 import com.member.homework.util.TestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,15 +38,15 @@ class LoadMemberServiceTest {
         testUtil.saveAllMembers(memberList);
 
         // when
-        List<Member> findMemberList = loadMemberService.loadAllMembers();
+        List<MemberDto> findMemberList = loadMemberService.loadAllMembers();
 
         // then
         assertThat(findMemberList).hasSize(3)
-                .extracting("id", "password", "name")
+                .extracting("id", "name")
                 .containsExactlyInAnyOrder(
-                    tuple("mb1", "1234", "01"),
-                    tuple("mb2", "5678", "02"),
-                    tuple("궁햄", "112", "03")
+                    tuple("mb1", "01"),
+                    tuple("mb2", "02"),
+                    tuple("궁햄", "03")
                 );
     }
 }

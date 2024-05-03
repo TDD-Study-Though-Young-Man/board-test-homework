@@ -1,6 +1,7 @@
 package com.member.homework.service;
 
 import com.member.homework.domain.Member;
+import com.member.homework.dto.response.MemberDto;
 import com.member.homework.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,10 @@ public class LoadMemberService {
 
     private final MemberRepository memberRepository;
 
-    public List<Member> loadAllMembers() {
-        return memberRepository.findAll();
+    public List<MemberDto> loadAllMembers() {
+        return memberRepository.findAll()
+                .stream()
+                .map(member -> new MemberDto(member.getId(), member.getName()))
+                .toList();
     }
 }
