@@ -1,6 +1,6 @@
 # API Documentation
 
-## 1️⃣ API Specification
+# 1️⃣ API Specification
 
 | 구분 | 화면 | 필요권한 | Method | Description | 요청 URL | Request JSON |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -12,10 +12,16 @@
 |  |  | 관리자 | DELETE | 사용자 삭제 | `/api/admin/users/{userId}` | `{}` |
 |  |  | 관리자 | GET | 사용자 비밀번호 초기화 | `/api/admin/users/{userId}/password` | `{}` |
 |  |  | 관리자 | POST | 사용자 권한 부여 | `/api/admin/users/{userId}/roles` | `{"grantRoleList": [{"role": "ADMIN"}, {"role": "USER"}]}` |
+| 검색 기능  | 게시글 검색   | 사용자   | GET    | 사용자가 게시판 내에서 특정 조건을 기준으로 게시글을 검색          | `/posts/search`           | `{"searchType": "string", "searchKeyword": "string"}`                                                                                                            |
+| 카테고리 관리 | 카테고리 추가 | 관리자   | POST   | 관리자가 새로운 카테고리를 생성                                   | `/categories`             | `{"name": "String", "description": "String", "parentId": "int"}`                                                                                                 |
+|  | 카테고리 조회 | 관리자   | GET    | 관리자가 모든 카테고리를 조회                                     | `/categories`             | 없음                                                                                                                                                             |
+|  | 카테고리 삭제 | 관리자   | DELETE | 관리자가 특정 카테고리를 삭제                                     | `/categories/{categoryId}`| 없음                                                                                                                                                             |
+|  | 카테고리 수정 | 관리자   | PUT    | 사용자가 카테고리의 이름, 설명, 부모 카테고리를 수정               | `/categories/{categoryId}`| `{"name": "String", "description": "String", "parentId": "int"}`                                                                                                 |
 
-## 2️⃣ 요구사항
 
-**관리 및 공통**
+# 2️⃣ 요구사항
+
+## **관리 및 공통** (담당 : [DevSeoRex](https://github.com/ch4570/) )
 
 - `관리자`는 관리자 페이지에 `로그인` 할 수 있다 - **Method Return Type (String - default(”jwttoken”))**
     - 관리자 페이지 로그인시, `아이디`와 `비밀번호`로 회원 조회 후 관리자가 아닐경우 “관리자 권한이 없습니다. 관리자 페이지에 진입할 수 없습니다.” 에러 표시가 필요하다.
@@ -52,3 +58,86 @@
     - 권한은 `Role` 테이블에 저장되며 `User`와 `Role` 사이의 `Join Table`인 `User_Role` 테이블에 권한과 유저를 매핑해준다.
 
 
+## 검색 기능 (담당 : [CoRaveler](https://github.com/xpmxf4))
+
+1. **게시글 검색 기능**
+  - 목적 : `사용자`가 게시판 내에서 `특정 조건을 기준으로 게시글을 검색`할 수 있다.
+  - URL : `/posts/search`
+  - Method : `GET`
+  - Query Parameters
+    - `searchType` : string, 검색 조건 (제목, 제목+내용, 작성자)
+    - `searchKeyword` : string, 검색 키워드
+  - Method Return Type (JSON)
+    - 성공 시 응답 예시 : `{ "status" : 200, "posts" : [ { post1 }, { post2 }, { post3 }, … ] }`
+    - 검색 조건에 맞는 게시글이 없는 경우 : `{ "status" : 204, "posts" : [ ] }`
+    - 잘못된 요청 파라미터로 인한 에러 : `{ "status" : 400, "error" : “잘못된 요청 파라미터가 들어왔습니다” }`
+  - Possible Errors
+    - `400 Bad Request` : 잘못된 요청 파라미터로 인한 에러
+
+## 카테고리 관리 기능 (담당 : [CoRaveler](https://github.com/xpmxf4))
+
+1. **카테고리 추가**
+  - 목적 : 관리자가 새로운 카테고리를 생성할 수 있다.
+  - URL : `/categories`
+  - Method : `POST`
+  - Request Body
+    - `name` : String, 카테고리 이름
+      - `@NotBlank(message = "카테고리 이름은 비워둘 수 없습니다.")`
+      - `@Size(min = 2, max = 50, message = "카테고리 이름은 2자 이상 50자 이하이어야 합니다.")`
+    - `description` : String, 카테고리 설명
+      - `@Size(max = 200, message = "카테고리 설명은 200자를 초과할 수 없습니다.")`
+    - `parentId` : int, 부모 카테고리 id (선택 사항)
+      - `@Min(value = 1, message = "부모 카테고리 ID는 1 이상이어야 합니다.")`
+
+        → 주어진 부모 카테고리의 존재 여부는 Service 계층에서
+
+  - Method Return Type (JSON)
+    - 카테고리 생성 성공 시 : `{ “status” : 200, message : “카테고리가 성공적으로 생성되었습니다.” }`
+    - 카테고리 생성 실패 : `{ “status” : 400, “error” : “제공된 데이터가 유효하지 않습니다.” }`
+    - 관리가 권한 없이 접근 : `{ “status” : 403, “error” : “관리자 권한이 없습니다. 관리자 페이지에 진입할 수 없습니다.” }`
+  - Possible Errors
+    - `400 Bad Request` : 필수 필드 누락, 잘못된 데이터 포맷, 또는 검증 실패
+    - `403 Forbidden` : 관리자 권한 없이 관리자 권한 접근
+2. **카테고리 조회**
+  - 목적 : `관리자`가 모든 `카테고리를 조회`할 수 있다
+  - URL : `/categories`
+  - Method : `GET`
+  - Method Return Type
+    - 카테고리 조회 성공 시 : `{ “categories” : [ { category1 }, { category4 }, { category3 }, … ] }`
+    - 카테고리가 없는 경우 : `{ “categories” : [] }`
+    - 관리가 권한 없이 접근 : `{ “status” : 403, “error” : “관리자 권한이 없습니다.” }`
+  - Possible Errors
+    - `403 Forbidden` : 관리자 권한 없이 관리자 권한 접근
+3. **카테고리 삭제**
+  - 목적 : 관리자가 특정 카테고리를 삭제할 수 있다.
+  - URL : `/categories/{categoryId}`
+  - Method : `DELETE`
+  - Method Return Type (JSON)
+    - 카테고리 삭제 성공시 : `{ “status” : 200, message : “카테고리가 성공적으로 삭제되었습니다.” }`
+    - 지정한 카테고리가 존재하지 않는 경우 : `{ “status” : 404, message : “해당 카테고리가 존재하지 않습니다.” }`
+    - 관리가 권한 없이 접근 : `{ “status” : 403, “error” : “관리자 권한이 없습니다. 관리자 페이지에 진입할 수 없습니다.” }`
+    - 게시글이 존재하는 카테고리는 변경 삭제가 안되는 경우 : `{ “status” : 400, “error” : “게시글이 존재하는 카테고리는 변경/삭제가 불가능합니다” }`
+  - Possible Errors
+    - `400 Bad Request` : 게시글이 존재하는 카테고리를 삭제하는 경우
+    - `403 Forbidden` : 관리자 권한 없이 관리자 권한 접근
+    - `404 Not Found` : 미존재 카테고리 삭제하는 경우
+4. **카테고리 수정**
+  - 목적 : 사용자가 카테고리의 이름, 설명, 부모 카테고리를 수정한다.
+  - URL : `/categories/{categoryId}`
+  - Method : PUT
+  - Requset Body
+    - `name` : String, 카테고리 이름
+      - `@NotBlank(message = "카테고리 이름은 비워둘 수 없습니다.")`
+      - `@Size(min = 2, max = 50, message = "카테고리 이름은 2자 이상 50자 이하이어야 합니다.")`
+    - `description` : String, 카테고리 설명
+      - `@Size(max = 200, message = "카테고리 설명은 200자를 초과할 수 없습니다.")`
+    - `parentId` : int, 부모 카테고리 id (선택 사항)
+      - `@Min(value = 1, message = "부모 카테고리 ID는 1 이상이어야 합니다.")`
+
+        → 주어진 부모 카테고리의 존재 여부는 Service 계층에서
+
+  - Method Return Type (JSON)
+  - Possible Errors
+    - `400 Bad Request` : 게시글이 존재하는 카테고리를 수정하는 경우
+    - `403 Forbidden` : 관리자 권한 없이 관리자 권한 접근
+    - `404 Not Found` : 미존재 카테고리 수정하는 경우
