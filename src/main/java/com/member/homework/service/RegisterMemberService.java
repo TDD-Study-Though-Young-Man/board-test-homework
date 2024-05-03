@@ -20,16 +20,16 @@ public class RegisterMemberService {
         checkDuplicateId(command);
 
         Member saveMember = memberRepository.save(Member.of(
-                command.id(),
-                passwordUtil.encodePassword(command.password()),
-                command.name()
+                command.getId(),
+                passwordUtil.encodePassword(command.getPassword()),
+                command.getName()
         ));
 
         return saveMember.getMemberId();
     }
 
     private void checkDuplicateId(RegisterMemberCommand command) {
-        if (memberRepository.existsMemberById(command.id())) {
+        if (memberRepository.existsMemberById(command.getId())) {
             throw new IllegalArgumentException("이미 가입된 ID 입니다.");
         }
     }

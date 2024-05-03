@@ -40,9 +40,8 @@ class GrantRoleServiceTest {
 
         // when
         grantRoleService.grantRoleToMember(memberId, List.of(
-                new GrantRoleCommand("MEMBER"),
-                new GrantRoleCommand("SUPER_ADMIN")
-        ));
+                "MEMBER",
+                "SUPER_ADMIN"));
 
         Member findMember = memberRepository.findById(memberId).orElseThrow();
         List<String> roleNameList = findMember.getMemberRoles()
@@ -65,7 +64,7 @@ class GrantRoleServiceTest {
 
         // when -> then
         assertThatThrownBy(() -> grantRoleService.grantRoleToMember(memberId,
-                List.of(new GrantRoleCommand("CEO")))
+                List.of("CEO"))
         ).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("유효하지 않은 권한 부여 시도는 허용되지 않습니다.");
     }

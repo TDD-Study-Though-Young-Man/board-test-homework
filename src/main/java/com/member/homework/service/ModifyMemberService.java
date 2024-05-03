@@ -17,14 +17,14 @@ public class ModifyMemberService {
     private final PasswordUtil passwordUtil;
 
     public void modifyMember(Long memberId, ModifyMemberCommand command) {
-        checkDuplicateId(command.id());
+        checkDuplicateId(command.getId());
 
         Member findMember = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원의 정보는 수정할 수 없습니다."));
 
 
-        findMember.updateMember(command.id(),
-                passwordUtil.encodePassword(command.password()), command.name());
+        findMember.updateMember(command.getId(),
+                passwordUtil.encodePassword(command.getPassword()), command.getName());
     }
 
     private void checkDuplicateId(String id) {

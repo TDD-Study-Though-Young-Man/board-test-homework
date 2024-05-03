@@ -15,10 +15,10 @@ public class MemberLoginService {
     private final PasswordUtil passwordUtil;
 
     public String login(LoginMemberCommand command) {
-        Member member = memberRepository.findById(command.id())
+        Member member = memberRepository.findById(command.getId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
 
-        passwordUtil.checkPassword(command.password(), member.getPassword());
+        passwordUtil.checkPassword(command.getPassword(), member.getPassword());
         return "jwttoken";
     }
 }
