@@ -15,7 +15,7 @@ public class Comment extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id", columnDefinition = "INTEGER")
-    private Long comment_id;
+    private Long commentId;
 
     @Column(name = "member_id", columnDefinition = "INTEGER")
     private Long memberId;
@@ -37,13 +37,16 @@ public class Comment extends BaseTimeEntity {
     private Boolean activeYn;
 
     @Builder
-    public Comment(Long comment_id, Long postId, String contents, Boolean deleteYn, Boolean activeYn) {
-        this.comment_id = comment_id;
+    public Comment(Long commentId, Long memberId, Long postId, Post post, String contents, Boolean deleteYn, Boolean activeYn) {
+        this.commentId = commentId;
+        this.memberId = memberId;
         this.postId = postId;
+        this.post = post;
         this.contents = contents;
         this.deleteYn = deleteYn;
         this.activeYn = activeYn;
     }
+
 
     public void updateCommentContents(String contents) {
         this.contents = contents;

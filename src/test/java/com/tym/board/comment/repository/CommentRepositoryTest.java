@@ -39,7 +39,7 @@ public class CommentRepositoryTest {
 
         Optional<Post> newPost = postRepository.findByContents("newPost");
 
-        Long postId = newPost.get().getComment_id();
+        Long postId = newPost.get().getPostId();
 
         Comment newComment = Comment.builder()
                 .postId(postId)
@@ -69,7 +69,7 @@ public class CommentRepositoryTest {
 
         Optional<Post> newPost = postRepository.findByContents("newPost");
 
-        Long postId = newPost.get().getComment_id();
+        Long postId = newPost.get().getPostId();
 
         Comment newComment = Comment.builder()
                 .postId(postId)
@@ -102,7 +102,7 @@ public class CommentRepositoryTest {
 
         Optional<Post> newPost = postRepository.findByContents("newPost");
 
-        Long postId = newPost.get().getComment_id();
+        Long postId = newPost.get().getPostId();
 
         Comment newComment = Comment.builder()
                 .postId(postId)
