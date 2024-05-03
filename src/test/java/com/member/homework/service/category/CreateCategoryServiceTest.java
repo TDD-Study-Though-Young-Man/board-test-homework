@@ -38,7 +38,7 @@ class CreateCategoryServiceTest {
         // then - 검증
         assertThat(createdCategory).isNotNull();
         assertThat(createdCategory)
-                .extracting("name", "desription", "parent")
+                .extracting("name", "description", "parent")
                 .containsExactlyInAnyOrder("name", "description", null);
     }
 
@@ -46,17 +46,8 @@ class CreateCategoryServiceTest {
     @DisplayName("존재하지 않는 카테고리 ID 로 대분류의 ID 를 설정할 수 없다.")
     void cannotSetParentIdWithUnexistingId() {
         // given - 상황 만들기
-        Category existingCategory = Category.of("존재하는 카테고리", "존재하는 카테고리 설명", null);
-        categoryRepository.save(existingCategory);
-        categoryRepository.flush();
-
-        Long existingCategoryId = categoryRepository.findByName("존재하는 카테고리").getId();
         CreateCategoryServiceRequest createCategoryServiceRequest
-                = new CreateCategoryServiceRequest(
-                "추가하는 카테고리",
-                "추가하는 카테고리 설명",
-                existingCategoryId
-        );
+                = new CreateCategoryServiceRequest("name", "desc", 10L);
 
         // when - 동작, then
         assertThatThrownBy(() -> createCategoryService.createCategory(createCategoryServiceRequest))
