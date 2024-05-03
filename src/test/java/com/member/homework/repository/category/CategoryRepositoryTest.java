@@ -1,4 +1,4 @@
-package com.member.homework.repository;
+package com.member.homework.repository.category;
 
 import com.member.homework.domain.*;
 import org.junit.jupiter.api.*;
