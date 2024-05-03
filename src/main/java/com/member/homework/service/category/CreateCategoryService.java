@@ -17,14 +17,18 @@ public class CreateCategoryService {
 
     public void createCategory(CreateCategoryServiceRequest createCategoryServiceRequest) {
         Long parentId = createCategoryServiceRequest.parentId();
-        if (parentId != -1 && categoryRepository.findById(parentId).isEmpty()) {
-            throw new CustomException(ErrorCode.CATEGORY_NOT_FOUND_BY_ID);
-        }
+        checkParentId(parentId);
 
         categoryRepository.save(Category.of(
                 createCategoryServiceRequest.name(),
                 createCategoryServiceRequest.description(),
                 null
         ));
+    }
+
+    private void checkParentId(Long parentId) {
+        if (parentId != -1 && categoryRepository.findById(parentId).isEmpty()) {
+            throw new CustomException(ErrorCode.CATEGORY_NOT_FOUND_BY_ID);
+        }
     }
 }
