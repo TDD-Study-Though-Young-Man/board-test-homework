@@ -65,8 +65,12 @@
   - URL : `/posts/search`
   - Method : `GET`
   - Query Parameters
-    - `searchType` : string, 검색 조건 (제목, 제목+내용, 작성자)
-    - `searchKeyword` : string, 검색 키워드
+  - `searchType` : string, 검색 조건 (제목, 제목+내용, 작성자)
+      - `@NotBlank(message = "검색 조건은 비워둘 수 없습니다.")`
+      - `@Size(min = 2, max = 50, message = "검색 조건은 2자 이상 50자 이하이어야 합니다.")`
+  - `searchKeyword` : string, 검색 키워드
+      - `@NotBlank(message = "검색 키워드는 비워둘 수 없습니다.")`
+      - `@Size(min = 2, max = 50, message = "검색 키워드는 2자 이상 50자 이하이어야 합니다.")`
   - Method Return Type (JSON)
     - 성공 시 응답 예시 : `{ "status" : 200, "posts" : [ { post1 }, { post2 }, { post3 }, … ] }`
     - 검색 조건에 맞는 게시글이 없는 경우 : `{ "status" : 204, "posts" : [ ] }`
