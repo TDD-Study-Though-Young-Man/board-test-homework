@@ -18,5 +18,12 @@ public class RemoveCategoryService {
     private final CategoryRepository categoryRepository;
 
     public void removeCategory(Long categoryId) {
+        Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
+        if (optionalCategory.isEmpty()) {
+            throw new CustomException(ErrorCode.CATEGORY_NOT_FOUND_BY_ID);
+        }
+
+        Category categoryToBeDeleted = optionalCategory.get();
+        categoryRepository.delete(categoryToBeDeleted);
     }
 }
