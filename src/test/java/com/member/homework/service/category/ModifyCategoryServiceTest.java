@@ -83,7 +83,7 @@ class ModifyCategoryServiceTest {
 
     @Test
     @DisplayName("존재하지 않는 id 의 부모 카테고리로 설정은 불가능하다.")
-    void cnatModifyParentIdWithUnexistingId() {
+    void cantModifyParentIdWithUnexistingId() {
         // given - 상황 만들기
         Category category1 = createCategory(1);
         Category category2 = createCategory(2);
