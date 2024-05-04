@@ -15,6 +15,7 @@ public class Category extends BaseTimeEntity {
     @Column(name = "category_id")
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
     private String description;
@@ -22,4 +23,19 @@ public class Category extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Category parent;
+
+    @Builder
+    private Category(String name, String description, Category parent) {
+        this.name = name;
+        this.description = description;
+        this.parent = parent;
+    }
+
+    public static Category of(String name, String description, Category category) {
+        return Category.builder()
+                .name(name)
+                .description(description)
+                .parent(category)
+                .build();
+    }
 }
