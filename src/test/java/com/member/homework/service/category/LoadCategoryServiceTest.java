@@ -44,9 +44,9 @@ class LoadCategoryServiceTest {
         assertThat(categories).hasSize(3)
                 .extracting("name", "description")
                 .containsExactlyInAnyOrder(
-                        tuple("test name", "test desc"),
-                        tuple("test name", "test desc"),
-                        tuple("test name", "test desc")
+                        tuple("test name1", "test desc1"),
+                        tuple("test name2", "test desc2"),
+                        tuple("test name3", "test desc3")
                 );
 
     }
