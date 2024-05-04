@@ -104,7 +104,7 @@ class ModifyCategoryServiceTest {
         // when - 동작, then - 검증
         assertThatThrownBy(() -> modifyCategoryService.modifyCategory(modifyRequest))
                 .isInstanceOf(CustomException.class)
-                .hasMessage("존재하지 않는 카테고리 ID 입니다.");
+                .hasMessage("존재하지 않는 부모 카테고리 입니다.");
     }
 
     private Category createCategory(int num) {

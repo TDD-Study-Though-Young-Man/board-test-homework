@@ -24,7 +24,7 @@ public class ModifyCategoryService {
             throw new CustomException(ErrorCode.CATEGORY_NOT_FOUND_BY_ID);
         }
         if(optionalParentCategory.isEmpty()) {
-            throw new CustomException(ErrorCode.CATEGORY_NOT_FOUND_BY_ID);
+            throw new CustomException(ErrorCode.CATEGORY_NOT_FOUND_BY_ID, "존재하지 않는 부모 카테고리 입니다.");
         }
         Category modifyingCategory = optionalModifyingCategory.get();
         Category parent = optionalParentCategory.get();
