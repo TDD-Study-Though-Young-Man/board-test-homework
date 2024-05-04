@@ -81,6 +81,32 @@ class ModifyCategoryServiceTest {
 
     }
 
+    @Test
+    @DisplayName("존재하지 않는 id 의 부모 카테고리로 설정은 불가능하다.")
+    void cnatModifyParentIdWithUnexistingId() {
+        // given - 상황 만들기
+        Category category1 = createCategory(1);
+        Category category2 = createCategory(2);
+        Category category3 = createCategory(3);
+        categoryRepository.saveAllAndFlush(List.of(
+                category1,
+                category2,
+                category3
+        ));
+        long unexistingId = categoryRepository.findMaxCategoryId() + 1;
+        ModifyCategoryServiceRequest modifyRequest = new ModifyCategoryServiceRequest(
+                category1.getId(),
+                "changed name",
+                "changed description",
+                unexistingId
+        );
+
+        // when - 동작, then - 검증
+        assertThatThrownBy(() -> modifyCategoryService.modifyCategory(modifyRequest))
+                .isInstanceOf(CustomException.class)
+                .hasMessage("존재하지 않는 카테고리 ID 입니다.");
+    }
+
     private Category createCategory(int num) {
         return Category.of("test name" + num, "test desc" + num, null);
     }
