@@ -8,4 +8,7 @@ import org.springframework.stereotype.*;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     Category findByName(String name);
+
+    @Query("select max(c.id) from Category c")
+    Long findMaxCategoryId();
 }
