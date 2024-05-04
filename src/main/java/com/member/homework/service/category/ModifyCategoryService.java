@@ -18,5 +18,16 @@ public class ModifyCategoryService {
     private final CategoryRepository categoryRepository;
 
     public void modifyCategory(ModifyCategoryServiceRequest modifyCommand) {
+        Optional<Category> optionalCategory = categoryRepository.findById(modifyCommand.id());
+        if (optionalCategory.isEmpty()) {
+            throw new CustomException(ErrorCode.CATEGORY_NOT_FOUND_BY_ID);
+        }
+        Category modifyingCategory = optionalCategory.get();
+        Category parent = categoryRepository.findById(modifyCommand.parentId()).get();
+        modifyingCategory.updateDetails(
+                modifyCommand.name(),
+                modifyCommand.description(),
+                parent
+        );
     }
 }
