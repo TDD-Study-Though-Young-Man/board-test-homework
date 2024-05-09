@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -31,8 +32,7 @@ class LoadMemberControllerTest {
     private LoadMemberService loadMemberService;
 
     @Test
-    @DisplayName("관리자는 모든 회원을 조회할 수 있다.")
-    void loadAllMembers() throws Exception {
+    void 관리자는_모든_회원을_조회할_수_있다() throws Exception {
         // given
         List<MemberDto> dtoList = List.of(
                 new MemberDto("mb1", "회원1"),
@@ -44,8 +44,10 @@ class LoadMemberControllerTest {
 
         // when -> then
         mockMvc.perform(get("/api/admin/users")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
+                .contentType(
+                        MediaType.APPLICATION_JSON)
+                        .header("Authentication", "ADMIN")
+                ).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data[0].id").value("mb1"))
                 .andExpect(jsonPath("$.data[1].id").value("mb2"))
@@ -55,6 +57,17 @@ class LoadMemberControllerTest {
                 .andExpect(jsonPath("$.data[2].name").value("회원3"))
                 .andExpect(jsonPath("$.statusCode").value(200))
                 .andExpect(jsonPath("$.message").value("OK"));
+    }
+
+    @Test
+    void 관리자_권한이_없는_경우_회원을_조회할_수_없다() throws Exception {
+        // when -> then
+        mockMvc.perform(get("/api/admin/users")
+                        .contentType(
+                                MediaType.APPLICATION_JSON)
+                        .header("Authentication", "MEMBER")
+                ).andDo(print())
+                .andExpect(status().isForbidden());
     }
 
 }
