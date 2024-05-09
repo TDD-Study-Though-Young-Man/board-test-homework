@@ -22,6 +22,20 @@
 2. HttpHeader에 { "Autentication" : "권한" }을 key-value로 보내주면 권한을 체크 후 API 접근이 가능합니다.
 3. 권한을 주지 않고 헤더 없이 보낼 경우, { "Authentication" : "NONE" } 으로 처리됩니다.
 
+```java
+mockMvc.perform(get("/api/admin/users")
+                .contentType(
+                        MediaType.APPLICATION_JSON)
+                        // header 지정하여 사용 -> ADMIN, MEMBER와 같은 일반 문자열 사용
+                        .header("Authentication", "ADMIN")
+                ).andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data[0].id").value("mb1"))
+                .andExpect(jsonPath("$.data[0].name").value("회원1"))
+                .andExpect(jsonPath("$.statusCode").value(200))
+                .andExpect(jsonPath("$.message").value("OK"));
+```
+
 # 3️⃣ 요구사항
 
 ## **관리 및 공통** (담당 : [DevSeoRex](https://github.com/ch4570/) )
