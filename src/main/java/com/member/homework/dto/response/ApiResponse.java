@@ -7,10 +7,10 @@ import org.springframework.http.HttpStatus;
 @Getter
 public class ApiResponse<T> {
 
-    private int code;
-    private HttpStatus status;
-    private T data;
-    private String message;
+    private final int code;
+    private final HttpStatus status;
+    private final T data;
+    private final String message;
 
     @Builder
     private ApiResponse(HttpStatus status, String message, T data) {
