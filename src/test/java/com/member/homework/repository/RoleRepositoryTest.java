@@ -1,7 +1,6 @@
 package com.member.homework.repository;
 
 import com.member.homework.domain.Role;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -17,8 +16,7 @@ class RoleRepositoryTest {
     private RoleRepository roleRepository;
 
     @Test
-    @DisplayName("권한의 이름들로 권한을 찾을 수 있어야 한다.")
-    void findAllByRoleNameInTest() {
+    void 권한의_이름들로_권한을_찾을_수_있어야_한다() {
         // given
         roleRepository.saveAll(List.of(
                 Role.of("ADMIN"),

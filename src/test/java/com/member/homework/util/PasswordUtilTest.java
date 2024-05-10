@@ -1,13 +1,11 @@
 package com.member.homework.util;
 
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
@@ -20,8 +18,7 @@ class PasswordUtilTest {
     PasswordEncoder passwordEncoder;
 
     @Test
-    @DisplayName("비밀번호를 평문으로 입력하면 암호화 할 수 있어야 한다.")
-    void encodePasswordTest() {
+    void 비밀번호를_평문으로_입력하면_암호화_할_수_있어야_한다() {
         // given
         String rawPassword = "1234";
 
@@ -34,8 +31,7 @@ class PasswordUtilTest {
     }
 
     @Test
-    @DisplayName("입력한 비밀번호와 암호화 한 비밀번호가 다르면 인증에 실패해야 한다.")
-    void checkPasswordTest() {
+    void 입력한_비밀번호와_암호화_한_비밀번호가_다르면_인증에_실패해야_한다() {
         // given
         String rawPassword = "1234";
         String encryptedPassword = passwordUtil.encodePassword("1233");

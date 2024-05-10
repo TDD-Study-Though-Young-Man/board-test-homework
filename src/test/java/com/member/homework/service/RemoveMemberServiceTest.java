@@ -34,8 +34,7 @@ class RemoveMemberServiceTest {
     private MemberRepository memberRepository;
 
     @Test
-    @DisplayName("관리자는 회원을 삭제할 수 있어야 한다.")
-    void removeMemberTest() {
+    void 관리자는_회원을_삭제할_수_있어야_한다() {
         // given
         Long memberId = testUtil.createMember("mb1", "1234", "ADMIN", "궁햄112");
 
@@ -52,8 +51,7 @@ class RemoveMemberServiceTest {
     }
 
     @Test
-    @DisplayName("존재하지 않는 회원의 삭제 시도는 실패해야 한다.")
-    void notExistsMemberRemoveTest() {
+    void 존재하지_않는_회원의_삭제_시도는_실패해야_한다() {
         // given
         Long memberId = testUtil.createMember("mb1", "1234", "ADMIN", "궁햄112");
 

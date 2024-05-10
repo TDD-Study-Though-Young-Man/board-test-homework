@@ -2,7 +2,6 @@ package com.member.homework.service;
 
 import com.member.homework.dto.request.LoginMemberCommand;
 import com.member.homework.util.TestUtil;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,8 +20,7 @@ class AdminLoginServiceTest {
     private TestUtil testUtil;
 
     @Test
-    @DisplayName("관리자 권한이 있는 사용자는 로그인에 성공해야 한다.")
-    void loginTest() {
+    void 관리자_권한이_있는_사용자는_로그인에_성공해야_한다() {
         // given
         String id = "mb1";
         String password = "1234";
@@ -38,8 +36,7 @@ class AdminLoginServiceTest {
     }
 
     @Test
-    @DisplayName("관리자 권한이 없는 사용자는 로그인에 실패해야 한다.")
-    void isNotAdminMemberTest() {
+    void 관리자_권한이_없는_사용자는_로그인에_실패해야_한다() {
         // given
         String id = "mb1";
         String password = "1234";
@@ -54,8 +51,7 @@ class AdminLoginServiceTest {
     }
 
     @Test
-    @DisplayName("회원은 존재하지만 아이디와 비밀번호가 다른 경우 로그인이 실패한다.")
-    void isNotAuthorizedMemberTest() {
+    void 회원은_존재하지만_아이디와_비밀번호가_다른_경우_로그인이_실패한다() {
         // given
         String id = "mb1";
 
@@ -69,8 +65,7 @@ class AdminLoginServiceTest {
     }
 
     @Test
-    @DisplayName("로그인 시도한 아이디가 존재하지 않는 아이디라면 로그인이 실패한다.")
-    void isNotExistsMemberTest() {
+    void 로그인_시도한_아이디가_존재하지_않는_아이디라면_로그인이_실패한다() {
         // given
         String password = "1234";
 

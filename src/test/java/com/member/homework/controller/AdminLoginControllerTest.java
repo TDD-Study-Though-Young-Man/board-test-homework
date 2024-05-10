@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.member.homework.config.SecurityConfig;
 import com.member.homework.dto.request.LoginMemberCommand;
 import com.member.homework.service.AdminLoginService;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -34,8 +33,7 @@ class AdminLoginControllerTest {
     private AdminLoginService adminLoginService;
 
     @Test
-    @DisplayName("관리자는 관리자 페이지에 로그인 할 수 있다.")
-    void loginTest() throws Exception {
+    void 관리자는_관리자_페이지에_로그인_할_수_있다() throws Exception {
         // given
         LoginMemberCommand loginMemberCommand = createLoginMemberCommand("id", "password");
         when(adminLoginService.login(any(LoginMemberCommand.class))).thenReturn("jwttoken");
@@ -52,8 +50,7 @@ class AdminLoginControllerTest {
     }
 
     @Test
-    @DisplayName("관리자 페이지 로그인시 아이디는 비어있을 수 없다.")
-    void loginTestWithBlankId() throws Exception {
+    void 관리자_페이지_로그인시_아이디는_비어있을_수_없다() throws Exception {
         // given
         LoginMemberCommand loginMemberCommand = createLoginMemberCommand(" ", "password");
         when(adminLoginService.login(any(LoginMemberCommand.class))).thenReturn("jwttoken");
@@ -70,8 +67,7 @@ class AdminLoginControllerTest {
     }
 
     @Test
-    @DisplayName("관리자 페이지 로그인시 비밀번호는 비어있을 수 없다.")
-    void loginTestWithBlankPassword() throws Exception {
+    void 관리자_페이지_로그인시_비밀번호는_비어있을_수_없다() throws Exception {
         // given
         LoginMemberCommand loginMemberCommand = createLoginMemberCommand("id", " ");
         when(adminLoginService.login(any(LoginMemberCommand.class))).thenReturn("jwttoken");

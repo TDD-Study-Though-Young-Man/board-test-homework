@@ -5,14 +5,11 @@ import com.member.homework.dto.request.ModifyMemberCommand;
 import com.member.homework.repository.MemberRepository;
 import com.member.homework.util.TestUtil;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
@@ -31,8 +28,7 @@ class ModifyMemberServiceTest {
     private PasswordEncoder passwordEncoder;
 
     @Test
-    @DisplayName("사용자가 회원 정보 수정을 시도하면 정보가 수정되어야 한다.")
-    void modifyMemberTest() {
+    void 사용자가_회원_정보_수정을_시도하면_정보가_수정되어야_한다() {
         // given
         Long memberId = testUtil.createMember("mb1", "1234", "MEMBER", "궁햄");
 
@@ -51,8 +47,7 @@ class ModifyMemberServiceTest {
 
 
     @Test
-    @DisplayName("사용자가 중복된 ID로 회원 정보를 수정하려고 시도하면 수정이 실패해야 한다.")
-    void useDuplicateIdForModifyMemberTest() {
+    void 사용자가_중복된_ID로_회원_정보를_수정하려고_시도하면_수정이_실패해야_한다() {
         // given
         Long memberId = testUtil.createMember("mb1", "1234", "MEMBER", "궁햄");
 

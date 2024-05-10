@@ -4,14 +4,12 @@ import com.member.homework.domain.Member;
 import com.member.homework.dto.request.RegisterMemberCommand;
 import com.member.homework.repository.MemberRepository;
 import com.member.homework.util.TestUtil;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 
 @Transactional
@@ -31,8 +29,7 @@ class RegisterMemberServiceTest {
     private PasswordEncoder passwordEncoder;
 
     @Test
-    @DisplayName("관리자는 회원을 생성할 수 있어야 한다.")
-    void registerTest() {
+    void 관리자는_회원을_생성할_수_있어야_한다() {
         // given
         String loginId = "mb1";
         String name = "궁햄";
@@ -51,8 +48,7 @@ class RegisterMemberServiceTest {
     }
 
     @Test
-    @DisplayName("존재하는 ID로 가입을 시도하면 가입이 실패해야 한다.")
-    void duplicateIdRegisterTest() {
+    void 존재하는_ID로_가입을_시도하면_가입이_실패해야_한다() {
         // given
         String id = "mb1";
         String name = "궁햄2";

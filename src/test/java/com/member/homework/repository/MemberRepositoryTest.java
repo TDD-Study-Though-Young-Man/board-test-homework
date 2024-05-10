@@ -1,7 +1,6 @@
 package com.member.homework.repository;
 
 import com.member.homework.domain.Member;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -19,8 +18,7 @@ class MemberRepositoryTest {
     private MemberRepository memberRepository;
 
     @Test
-    @DisplayName("가입된 회원을 전체 조회할 수 있어야 한다.")
-    void findAllTest() {
+    void 가입된_회원을_전체_조회할_수_있어야_한다() {
         // given
         memberRepository.saveAll(
                 List.of(
@@ -43,8 +41,7 @@ class MemberRepositoryTest {
     }
 
     @Test
-    @DisplayName("회원의 고유 ID로 회원을 조회할 수 있어야 한다.")
-    void findByIdTest() {
+    void 회원의_고유_ID로_회원을_조회할_수_있어야_한다() {
         // given
         String loginId = "javajunsuk123";
         Member member = Member.of(loginId, "devcamp", "01");
@@ -59,8 +56,7 @@ class MemberRepositoryTest {
     }
 
     @Test
-    @DisplayName("회원의 ID로 회원 존재 여부를 알 수 있어야 한다.")
-    void existsMemberById() {
+    void 회원의_ID로_회원_존재_여부를_알_수_있어야_한다() {
         // given
         memberRepository.save(Member.of("mb1", "1234", "궁햄"));
 
@@ -74,8 +70,7 @@ class MemberRepositoryTest {
     }
 
     @Test
-    @DisplayName("회원의 고유 ID(PK)로 회원을 삭제할 수 있어야 한다.")
-    void deleteById() {
+    void 회원의_고유_ID_로_회원을_삭제할_수_있어야_한다() {
         // given
         Member member = memberRepository.save(Member.of("mb1", "1234", "궁햄"));
 

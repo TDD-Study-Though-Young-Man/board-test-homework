@@ -2,7 +2,6 @@ package com.member.homework.service;
 
 import com.member.homework.dto.request.LoginMemberCommand;
 import com.member.homework.util.TestUtil;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,8 +22,7 @@ class MemberLoginServiceTest {
 
 
     @Test
-    @DisplayName("사용자는 게시판 서비스에 로그인 할 수 있어야 한다.")
-    void loginTest() {
+    void 사용자는_게시판_서비스에_로그인_할_수_있어야_한다() {
         // given
         testUtil.createMember("mb1", "1234", "MEMBER", "궁햄");
         LoginMemberCommand command = new LoginMemberCommand("mb1", "1234");
@@ -37,8 +35,7 @@ class MemberLoginServiceTest {
     }
 
     @Test
-    @DisplayName("로그인 시도한 아이디가 존재하지 않는 아이디라면 로그인이 실패한다.")
-    void isNotExistsMemberTest() {
+    void 로그인_시도한_아이디가_존재하지_않는_아이디라면_로그인이_실패한다() {
         // given
         testUtil.createMember("mb1", "1234", "MEMBER", "궁햄");
         LoginMemberCommand command = new LoginMemberCommand("mb2", "1234");
