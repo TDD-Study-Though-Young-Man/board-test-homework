@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 
@@ -39,13 +40,15 @@ class LoadMemberControllerTest {
 
         when(loadMemberService.loadAllMembers()).thenReturn(dtoList);
 
-        // when -> then
-        mockMvc.perform(get("/api/admin/users")
+        // when
+        ResultActions actions = mockMvc.perform(get("/api/admin/users")
                 .contentType(
                         MediaType.APPLICATION_JSON)
                         .header("Authentication", "ADMIN")
-                ).andDo(print())
-                .andExpect(status().isOk())
+                ).andDo(print());
+
+        // then
+        actions.andExpect(status().isOk())
                 .andExpect(jsonPath("$.data[0].id").value("mb1"))
                 .andExpect(jsonPath("$.data[1].id").value("mb2"))
                 .andExpect(jsonPath("$.data[2].id").value("mb3"))
