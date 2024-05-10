@@ -13,7 +13,7 @@ public class Comment extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id", columnDefinition = "INTEGER", nullable = false)
-    private Long comment_id;
+    private Long commentId;
 
     @ManyToOne
     @JoinColumn(name = "member_id")

@@ -16,7 +16,7 @@ public class Post extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id", columnDefinition = "INTEGER", nullable = false)
-    private Long post_id;
+    private Long postId;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -51,5 +51,13 @@ public class Post extends BaseTimeEntity {
         this.author = author;
         this.deleteYn = deleteYn;
         this.activeYn = activeYn;
+    }
+
+    public static Post of(String title, String content, String author) {
+        return Post.builder()
+                .title(title)
+                .content(content)
+                .author(author)
+                .build();
     }
 }
