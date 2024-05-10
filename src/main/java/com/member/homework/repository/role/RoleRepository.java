@@ -1,4 +1,4 @@
-package com.member.homework.repository;
+package com.member.homework.repository.role;
 
 import com.member.homework.domain.Role;
 import org.springframework.data.jpa.repository.JpaRepository;

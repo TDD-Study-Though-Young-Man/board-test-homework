@@ -1,6 +1,7 @@
-package com.member.homework.service;
+package com.member.homework.service.admin;
 
 import com.member.homework.dto.request.LoginMemberCommand;
+import com.member.homework.service.admin.AdminLoginService;
 import com.member.homework.util.TestUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

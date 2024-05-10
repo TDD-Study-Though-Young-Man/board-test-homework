@@ -1,8 +1,8 @@
-package com.member.homework.service;
+package com.member.homework.service.member;
 
 import com.member.homework.domain.Member;
 import com.member.homework.dto.request.ModifyMemberCommand;
-import com.member.homework.repository.MemberRepository;
+import com.member.homework.repository.member.MemberRepository;
 import com.member.homework.util.TestUtil;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

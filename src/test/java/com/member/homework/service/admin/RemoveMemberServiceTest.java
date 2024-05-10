@@ -1,11 +1,11 @@
-package com.member.homework.service;
+package com.member.homework.service.admin;
 
 import com.member.homework.domain.Member;
 import com.member.homework.domain.MemberRole;
-import com.member.homework.repository.MemberRepository;
-import com.member.homework.repository.MemberRoleRepository;
+import com.member.homework.repository.member.MemberRepository;
+import com.member.homework.repository.member.MemberRoleRepository;
+import com.member.homework.service.admin.RemoveMemberService;
 import com.member.homework.util.TestUtil;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 
 @Transactional

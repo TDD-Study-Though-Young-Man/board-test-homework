@@ -1,7 +1,8 @@
-package com.member.homework.service;
+package com.member.homework.service.admin;
 
 import com.member.homework.domain.Member;
 import com.member.homework.dto.response.MemberDto;
+import com.member.homework.service.admin.LoadMemberService;
 import com.member.homework.util.TestUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 
 @Transactional

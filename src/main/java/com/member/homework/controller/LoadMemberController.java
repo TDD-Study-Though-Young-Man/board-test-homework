@@ -2,7 +2,7 @@ package com.member.homework.controller;
 
 import com.member.homework.common.BaseResponse;
 import com.member.homework.dto.response.MemberDto;
-import com.member.homework.service.LoadMemberService;
+import com.member.homework.service.admin.LoadMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

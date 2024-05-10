@@ -1,4 +1,4 @@
-package com.member.homework.repository;
+package com.member.homework.repository.role;
 
 import com.member.homework.domain.Role;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 class RoleRepositoryTest {

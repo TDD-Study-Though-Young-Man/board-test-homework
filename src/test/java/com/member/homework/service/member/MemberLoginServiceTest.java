@@ -1,4 +1,4 @@
-package com.member.homework.service;
+package com.member.homework.service.member;
 
 import com.member.homework.dto.request.LoginMemberCommand;
 import com.member.homework.util.TestUtil;
@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 
 @Transactional
