@@ -34,7 +34,7 @@ class MemberRepositoryTest {
 
         // then
         assertThat(memberList).hasSize(3)
-                .extracting("id", "password", "name")
+                .extracting("loginId", "password", "name")
                 .containsExactlyInAnyOrder(
                         tuple("member1", "1234", "01"),
                         tuple("member2", "5678", "02"),
@@ -46,12 +46,12 @@ class MemberRepositoryTest {
     @DisplayName("회원의 고유 ID로 회원을 조회할 수 있어야 한다.")
     void findByIdTest() {
         // given
-        String id = "javajunsuk123";
-        Member member = Member.of(id, "devcamp", "01");
+        String loginId = "javajunsuk123";
+        Member member = Member.of(loginId, "devcamp", "01");
         memberRepository.save(member);
 
         // when
-        Member findMember = memberRepository.findById(id)
+        Member findMember = memberRepository.findByLoginId(loginId)
                 .orElseThrow();
 
         // then
@@ -65,8 +65,8 @@ class MemberRepositoryTest {
         memberRepository.save(Member.of("mb1", "1234", "궁햄"));
 
         // when
-        boolean successResult = memberRepository.existsMemberById("mb1");
-        boolean failureResult = memberRepository.existsMemberById("mb2");
+        boolean successResult = memberRepository.existsMemberByLoginId("mb1");
+        boolean failureResult = memberRepository.existsMemberByLoginId("mb2");
 
         // then
         assertThat(successResult).isTrue();

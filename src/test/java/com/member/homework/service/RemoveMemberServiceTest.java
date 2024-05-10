@@ -41,7 +41,7 @@ class RemoveMemberServiceTest {
 
         // when
         removeMemberService.removeMember(memberId);
-        Optional<Member> findMember = memberRepository.findById("mb1");
+        Optional<Member> findMember = memberRepository.findByLoginId("mb1");
 
         List<MemberRole> memberRoleList = memberRoleRepository.findAll();
 

@@ -40,10 +40,10 @@ class ModifyMemberServiceTest {
 
         // when
         modifyMemberService.modifyMember(memberId, command);
-        Member updateMember = memberRepository.findById("mb2").orElseThrow();
+        Member updateMember = memberRepository.findByLoginId("mb2").orElseThrow();
 
         // then
-        Assertions.assertThat(updateMember.getId()).isEqualTo("mb2");
+        Assertions.assertThat(updateMember.getLoginId()).isEqualTo("mb2");
         Assertions.assertThat(updateMember.getName()).isEqualTo("궁햄2");
         Assertions.assertThat(passwordEncoder.matches("1236", updateMember.getPassword())).isTrue();
 

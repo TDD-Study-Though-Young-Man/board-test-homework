@@ -34,14 +34,14 @@ class RegisterMemberServiceTest {
     @DisplayName("관리자는 회원을 생성할 수 있어야 한다.")
     void registerTest() {
         // given
-        String id = "mb1";
+        String loginId = "mb1";
         String name = "궁햄";
         String password = "1234";
-        RegisterMemberCommand command = testUtil.createRegisterMemberCommand(id, "1234", name);
+        RegisterMemberCommand command = testUtil.createRegisterMemberCommand(loginId, "1234", name);
 
         // when
         Long memberId = registerMemberService.register(command);
-        Member member = memberRepository.findById(id)
+        Member member = memberRepository.findByLoginId(loginId)
                 .orElseThrow();
 
         // then

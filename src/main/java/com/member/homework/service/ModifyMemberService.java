@@ -27,8 +27,8 @@ public class ModifyMemberService {
                 passwordUtil.encodePassword(command.getPassword()), command.getName());
     }
 
-    private void checkDuplicateId(String id) {
-        if (memberRepository.existsMemberById(id)) {
+    private void checkDuplicateId(String loginId) {
+        if (memberRepository.existsMemberByLoginId(loginId)) {
             throw new IllegalArgumentException("중복된 ID로 정보 변경은 불가능합니다.");
         }
     }

@@ -20,7 +20,7 @@ public class RegisterMemberService {
         checkDuplicateId(command);
 
         Member saveMember = memberRepository.save(Member.of(
-                command.getId(),
+                command.getLoginId(),
                 passwordUtil.encodePassword(command.getPassword()),
                 command.getName()
         ));
@@ -29,7 +29,7 @@ public class RegisterMemberService {
     }
 
     private void checkDuplicateId(RegisterMemberCommand command) {
-        if (memberRepository.existsMemberById(command.getId())) {
+        if (memberRepository.existsMemberByLoginId(command.getLoginId())) {
             throw new IllegalArgumentException("이미 가입된 ID 입니다.");
         }
     }

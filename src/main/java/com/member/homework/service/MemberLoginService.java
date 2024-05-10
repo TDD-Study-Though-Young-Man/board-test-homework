@@ -15,7 +15,7 @@ public class MemberLoginService {
     private final PasswordUtil passwordUtil;
 
     public String login(LoginMemberCommand command) {
-        Member member = memberRepository.findById(command.getId())
+        Member member = memberRepository.findByLoginId(command.getLoginId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
 
         passwordUtil.checkPassword(command.getPassword(), member.getPassword());

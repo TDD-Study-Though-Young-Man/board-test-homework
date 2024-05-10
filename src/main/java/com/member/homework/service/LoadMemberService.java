@@ -17,7 +17,7 @@ public class LoadMemberService {
     public List<MemberDto> loadAllMembers() {
         return memberRepository.findAll()
                 .stream()
-                .map(member -> new MemberDto(member.getId(), member.getName()))
+                .map(member -> new MemberDto(member.getLoginId(), member.getName()))
                 .toList();
     }
 }
