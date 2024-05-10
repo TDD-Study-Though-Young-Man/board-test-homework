@@ -1,6 +1,7 @@
 package com.member.homework.repository.comment;
 
 import com.member.homework.domain.Comment;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -13,21 +14,24 @@ public class CommentRepositoryTest {
     @Autowired
     private CommentRepository commentRepository;
 
-    @Test
-    void 새로운_댓글을_추가할_수_있어야_한다() {
-        //given
-        String commentContent = "테스트 댓글 내용";
-        String commentAuthor = "테스트 댓글 작성자";
+    private Comment comment;
+    String commentContent = "테스트 댓글 내용";
+    String commentAuthor = "테스트 댓글 작성자";
 
-        Comment newComment = Comment.builder()
+    @BeforeEach
+    void setUp() {
+        comment = Comment.builder()
                 .author(commentAuthor)
                 .content(commentContent)
                 .deleteYn(false)
                 .activeYn(true)
                 .build();
+    }
 
-        //when
-        Comment savedComment = commentRepository.save(newComment);
+    @Test
+    void 새로운_댓글을_추가할_수_있어야_한다() {
+         //when
+        Comment savedComment = commentRepository.save(comment);
 
         //then
         Comment foundComment = commentRepository.findById(savedComment.getCommentId()).orElseThrow();
@@ -40,17 +44,7 @@ public class CommentRepositoryTest {
     @Test
     void 기존_댓글을_수정할_수_있어야_한다() {
         //given
-        String commentContent = "테스트 댓글 내용";
-        String commentAuthor = "테스트 댓글 작성자";
-
-        Comment newComment = Comment.builder()
-                .author(commentAuthor)
-                .content(commentContent)
-                .deleteYn(false)
-                .activeYn(true)
-                .build();
-
-        Comment savedComment = commentRepository.save(newComment);
+        Comment savedComment = commentRepository.save(comment);
 
         //when
         String newCommentContent = "테스트 수정 댓글 내용";
@@ -66,17 +60,7 @@ public class CommentRepositoryTest {
     @Test
     void 기존_댓글을_삭제할_수_있어야_한다() {
         //given
-        String commentContent = "테스트 댓글 내용";
-        String commentAuthor = "테스트 댓글 작성자";
-
-        Comment newComment = Comment.builder()
-                .author(commentAuthor)
-                .content(commentContent)
-                .deleteYn(false)
-                .activeYn(true)
-                .build();
-
-        Comment savedComment = commentRepository.save(newComment);
+        Comment savedComment = commentRepository.save(comment);
 
         //when
         savedComment.updateCommentDeleted(true);
