@@ -1,16 +1,15 @@
-package com.member.homework.service;
+package com.member.homework.service.admin;
 
 import com.member.homework.domain.Member;
-import com.member.homework.repository.MemberRepository;
+import com.member.homework.repository.member.MemberRepository;
+import com.member.homework.service.admin.RevertPasswordService;
 import com.member.homework.util.TestUtil;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
@@ -26,8 +25,7 @@ class RevertPasswordServiceTest {
     private TestUtil testUtil;
 
     @Test
-    @DisplayName("관리자는 사용자의 비밀번호를 초기화 할 수 있다.")
-    void passwordRevertTest() {
+    void 관리자는_사용자의_비밀번호를_초기화_할_수_있다() {
         // given
         Long memberId = testUtil.createMember("mb1", "1234", "ADMIN", "궁햄112");
 
@@ -40,8 +38,7 @@ class RevertPasswordServiceTest {
     }
 
     @Test
-    @DisplayName("존재하지 않는 사용자의 비밀번호는 초기화 할 수 없다.")
-    void invalidUserPasswordRevertTest() {
+    void 존재하지_않는_사용자의_비밀번호는_초기화_할_수_없다() {
         // given
         Long memberId = testUtil.createMember("mb1", "1234", "ADMIN", "궁햄112");
 

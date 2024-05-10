@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 public class RegisterMemberCommand {
 
     @NotBlank(message = "아이디는 비어있을 수 없습니다.")
-    private final String id;
+    private final String loginId;
 
     @NotBlank(message = "비밀번호는 비어있을 수 없습니다.")
     private final String password;

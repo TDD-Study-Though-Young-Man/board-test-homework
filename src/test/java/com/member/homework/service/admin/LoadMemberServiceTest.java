@@ -1,9 +1,9 @@
-package com.member.homework.service;
+package com.member.homework.service.admin;
 
 import com.member.homework.domain.Member;
 import com.member.homework.dto.response.MemberDto;
+import com.member.homework.service.admin.LoadMemberService;
 import com.member.homework.util.TestUtil;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 
 @Transactional
@@ -26,8 +25,7 @@ class LoadMemberServiceTest {
 
 
     @Test
-    @DisplayName("관리자는 회원을 전체조회 할 수 있어야 한다.")
-    void loadAllMembersTest() {
+    void 관리자는_회원을_전체조회_할_수_있어야_한다() {
         // given
         List<Member> memberList = List.of(
                 Member.of("mb1", "1234", "01"),
