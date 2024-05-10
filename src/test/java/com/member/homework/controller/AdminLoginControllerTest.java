@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -36,12 +37,15 @@ class AdminLoginControllerTest {
         LoginMemberCommand loginMemberCommand = createLoginMemberCommand("id", "password");
         when(adminLoginService.login(any(LoginMemberCommand.class))).thenReturn("jwttoken");
 
-        // when -> then
-        mockMvc.perform(post("/api/admin/login")
+        // when
+        ResultActions actions = mockMvc.perform(post("/api/admin/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(loginMemberCommand)))
-                .andDo(print())
-                .andExpect(status().isOk())
+                .andDo(print());
+
+
+        // then
+        actions.andExpect(status().isOk())
                 .andExpect(jsonPath("$.data").value("jwttoken"))
                 .andExpect(jsonPath("$.statusCode").value(200))
                 .andExpect(jsonPath("$.message").value("OK"));
@@ -53,12 +57,15 @@ class AdminLoginControllerTest {
         LoginMemberCommand loginMemberCommand = createLoginMemberCommand(" ", "password");
         when(adminLoginService.login(any(LoginMemberCommand.class))).thenReturn("jwttoken");
 
-        // when -> then
-        mockMvc.perform(post("/api/admin/login")
+        // when
+        ResultActions actions = mockMvc.perform(post("/api/admin/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(loginMemberCommand)))
-                .andDo(print())
-                .andExpect(status().isBadRequest())
+                .andDo(print());
+
+
+        // then
+        actions.andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.data").isEmpty())
                 .andExpect(jsonPath("$.statusCode").value(400))
                 .andExpect(jsonPath("$.message").value("아이디는 비어있을 수 없습니다."));
@@ -70,12 +77,14 @@ class AdminLoginControllerTest {
         LoginMemberCommand loginMemberCommand = createLoginMemberCommand("id", " ");
         when(adminLoginService.login(any(LoginMemberCommand.class))).thenReturn("jwttoken");
 
-        // when -> then
-        mockMvc.perform(post("/api/admin/login")
+        // when
+        ResultActions actions = mockMvc.perform(post("/api/admin/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(loginMemberCommand)))
-                .andDo(print())
-                .andExpect(status().isBadRequest())
+                .andDo(print());
+
+        // then
+        actions.andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.data").isEmpty())
                 .andExpect(jsonPath("$.statusCode").value(400))
                 .andExpect(jsonPath("$.message").value("비밀번호는 비어있을 수 없습니다."));
