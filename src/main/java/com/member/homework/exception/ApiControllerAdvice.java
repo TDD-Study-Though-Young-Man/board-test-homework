@@ -7,11 +7,10 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
@@ -29,5 +28,12 @@ public class ApiControllerAdvice {
 
         return ResponseEntity.badRequest()
                 .body(ApiResponse.of(BAD_REQUEST, BAD_REQUEST.getReasonPhrase(), errorMap));
+    }
+
+    @ExceptionHandler(HandlerMethodValidationException.class)
+    public ResponseEntity<ApiResponse<String>> handlerMethodValidationException() {
+
+        return ResponseEntity.badRequest()
+                .body(ApiResponse.of(BAD_REQUEST, ErrorCode.PARAMETER_INVALID.getDetail()));
     }
 }

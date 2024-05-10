@@ -18,6 +18,7 @@ public class RegisterMemberController {
 
     @PostMapping("/api/admin/users")
     public ResponseEntity<ApiResponse<Long>> register(@Valid @RequestBody RegisterMemberCommand registerMemberCommand) {
-             return ResponseEntity.ok(ApiResponse.ok(registerMemberService.register(registerMemberCommand)));
+        Long memberId = registerMemberService.register(registerMemberCommand);
+        return ResponseEntity.ok(ApiResponse.ok(memberId));
     }
 }

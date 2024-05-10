@@ -14,10 +14,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.ResultActions;
 import java.nio.charset.StandardCharsets;
 import static com.member.homework.exception.ErrorCode.*;
 import static org.assertj.core.api.BDDAssertions.then;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -39,15 +40,18 @@ class RegisterMemberControllerTest {
     void 회원가입을_할_수_있다() throws Exception {
 
         // given
-        RegisterMemberCommand request = create("123", "qqq", "qqq");
+        RegisterMemberCommand request = create("memberId", "memberPassword", "memberName");
 
-        //when //then
-        then(registerMemberService.register(request)).isInstanceOf(Number.class);
+        //when
+        then(registerMemberService.register(request)).isInstanceOf(Long.class);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/users")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding(StandardCharsets.UTF_8)
-                        .content(objectMapper.writeValueAsString(request)))
+        ResultActions resultActions = mockMvc.perform(post("/api/admin/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(StandardCharsets.UTF_8)
+                .content(objectMapper.writeValueAsString(request)));
+
+        //then
+        resultActions
                 .andExpect(jsonPath("$.data").isNumber())
                 .andExpect(jsonPath("$.code").value(HttpStatus.OK.value()));
     }
@@ -56,17 +60,19 @@ class RegisterMemberControllerTest {
     void 회원가입을_하려면_아이디를_가져야_한다() throws Exception {
 
         // given
-        RegisterMemberCommand request = create(" ", "111", "ok");
+        RegisterMemberCommand request = create(" ", "memberPassword", "memberName");
 
-        //when //then
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/users")
-                        .content(objectMapper.writeValueAsString(request))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding(StandardCharsets.UTF_8))
-                .andDo(print())
+        //when
+        ResultActions resultActions = mockMvc.perform(post("/api/admin/users")
+                .content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(StandardCharsets.UTF_8));
+
+        //then
+        resultActions.andDo(print())
                 .andExpect(jsonPath("$.data").isMap())
                 .andExpect(jsonPath("$.code").value(HttpStatus.BAD_REQUEST.value()))
-                .andExpect(jsonPath("$.data['id']").value(NOT_BE_EMPTY_MEMBER_ID.getDetail()));
+                .andExpect(jsonPath("$.data['id']").value(ID_CANNOT_BE_EMPTY.getDetail()));
 
     }
 
@@ -74,52 +80,57 @@ class RegisterMemberControllerTest {
     void 회원가입을_하려면_비밀번호를_가져야_한다() throws Exception {
 
         // given
-        RegisterMemberCommand request = create("khm", " ", "ok");
+        RegisterMemberCommand request = create("memberId", " ", "memberName");
 
-        //when //then
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/users")
-                        .content(objectMapper.writeValueAsString(request))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding(StandardCharsets.UTF_8))
-                .andDo(print())
+        //when
+        ResultActions resultActions = mockMvc.perform(post("/api/admin/users")
+                .content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(StandardCharsets.UTF_8));
+        //then
+        resultActions.andDo(print())
                 .andExpect(jsonPath("$.data").isMap())
                 .andExpect(jsonPath("$.code").value(HttpStatus.BAD_REQUEST.value()))
-                .andExpect(jsonPath("$.data['password']").value(NOT_BE_EMPTY_MEMBER_PASSWORD.getDetail()));
+                .andExpect(jsonPath("$.data['password']").value(PASSWORD_CANNOT_BE_EMPTY.getDetail()));
     }
 
     @Test
     void 회원가입을_하려면_이름을_가져야_한다() throws Exception {
 
         // given
-        RegisterMemberCommand request = create("khm", "be", "  ");
+        RegisterMemberCommand request = create("memberId", "memberName", "  ");
 
-        //when //then
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/users")
-                        .content(objectMapper.writeValueAsString(request))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding(StandardCharsets.UTF_8))
-                .andDo(print())
+        //when
+        ResultActions resultActions = mockMvc.perform(post("/api/admin/users")
+                .content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(StandardCharsets.UTF_8));
+
+        //then
+        resultActions.andDo(print())
                 .andExpect(jsonPath("$.data").isMap())
                 .andExpect(jsonPath("$.code").value(HttpStatus.BAD_REQUEST.value()))
-                .andExpect(jsonPath("$.data['name']").value(NOT_BE_EMPTY_MEMBER_NAME.getDetail()));
+                .andExpect(jsonPath("$.data['name']").value(NAME_CANNOT_BE_EMPTY.getDetail()));
     }
 
     @Test
     void 회원가입을_하려면_아이디와_비밀번호를_가져야_한다() throws Exception {
 
         // given
-        RegisterMemberCommand request = create(" ", " ", "우간다");
+        RegisterMemberCommand request = create(" ", " ", "memberName");
 
-        //when //then
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/users")
-                        .content(objectMapper.writeValueAsString(request))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding(StandardCharsets.UTF_8))
-                .andDo(print())
+        //when
+        ResultActions resultActions = mockMvc.perform(post("/api/admin/users")
+                .content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(StandardCharsets.UTF_8));
+
+        //then
+        resultActions.andDo(print())
                 .andExpect(jsonPath("$.data").isMap())
                 .andExpect(jsonPath("$.code").value(HttpStatus.BAD_REQUEST.value()))
-                .andExpect(jsonPath("$.data['id']").value(NOT_BE_EMPTY_MEMBER_ID.getDetail()))
-                .andExpect(jsonPath("$.data['password']").value(NOT_BE_EMPTY_MEMBER_PASSWORD.getDetail()));
+                .andExpect(jsonPath("$.data['id']").value(ID_CANNOT_BE_EMPTY.getDetail()))
+                .andExpect(jsonPath("$.data['password']").value(PASSWORD_CANNOT_BE_EMPTY.getDetail()));
     }
 
     @Test
@@ -128,40 +139,22 @@ class RegisterMemberControllerTest {
         // given
         RegisterMemberCommand request = create(" ", " ", " ");
 
-        //when //then
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/users")
-                        .content(objectMapper.writeValueAsString(request))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding(StandardCharsets.UTF_8))
-                .andDo(print())
+        //when
+        ResultActions resultActions = mockMvc.perform(post("/api/admin/users")
+                .content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(StandardCharsets.UTF_8));
+
+        //then
+        resultActions.andDo(print())
                 .andExpect(jsonPath("$.data").isMap())
                 .andExpect(jsonPath("$.code").value(HttpStatus.BAD_REQUEST.value()))
-                .andExpect(jsonPath("$.data['id']").value(NOT_BE_EMPTY_MEMBER_ID.getDetail()))
-                .andExpect(jsonPath("$.data['name']").value(NOT_BE_EMPTY_MEMBER_NAME.getDetail()))
-                .andExpect(jsonPath("$.data['password']").value(NOT_BE_EMPTY_MEMBER_PASSWORD.getDetail()));
+                .andExpect(jsonPath("$.data['id']").value(ID_CANNOT_BE_EMPTY.getDetail()))
+                .andExpect(jsonPath("$.data['name']").value(NAME_CANNOT_BE_EMPTY.getDetail()))
+                .andExpect(jsonPath("$.data['password']").value(PASSWORD_CANNOT_BE_EMPTY.getDetail()));
     }
 
     private RegisterMemberCommand create(String id, String password, String name) {
         return new RegisterMemberCommand(id, password, name);
     }
-    /*
-    @Test
-    void 한_데이터에_두_가지_이상의_유효성_검증이_필요한_경우() throws Exception {
-
-        // given
-        RegisterMemberCommand request = create("", "be", "");
-
-        //when //then
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/users")
-                        .content(objectMapper.writeValueAsString(request))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.code").value("400"))
-                .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
-                .andExpect(jsonPath("$.data['name']").value("회원 이름은 필수입니다."))
-                .andExpect(jsonPath("$.data['id']").isArray())
-                .andExpect(jsonPath("$.data['id']").value(Matchers.containsInAnyOrder("회원 아이디가 공백이면 안됩니다.","회원 아이디는 필수입니다.")));
-    }
-     */
 }

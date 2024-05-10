@@ -13,13 +13,16 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-
+import static com.member.homework.exception.ErrorCode.PARAMETER_INVALID;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(controllers = GrantRoleController.class)
@@ -43,12 +46,14 @@ class GrantRoleControllerTest {
 
         List<String> result = List.of("MEMBER");
 
-        //when //then
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/users/{userId}/roles", userId)
-                        .content(objectMapper.writeValueAsString(result))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding(StandardCharsets.UTF_8))
-                .andDo(print())
+        //when
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/users/{userId}/roles", userId)
+                .content(objectMapper.writeValueAsString(result))
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(StandardCharsets.UTF_8));
+
+        //then
+        resultActions.andDo(print())
                 .andExpect(jsonPath("$.data").isNumber())
                 .andExpect(jsonPath("$.data").value(userId))
                 .andExpect(jsonPath("$.code").value(HttpStatus.OK.value()));
@@ -62,12 +67,18 @@ class GrantRoleControllerTest {
 
         List<String> result = List.of("MEMBER");
 
-        //when //then
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/users/{userId}/roles", userId)
-                        .content(objectMapper.writeValueAsString(result))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding(StandardCharsets.UTF_8))
-                .andDo(print())
-                .andExpect(status().isBadRequest());
+        //when
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/users/{userId}/roles", userId)
+                .content(objectMapper.writeValueAsString(result))
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(StandardCharsets.UTF_8));
+
+        //then
+        resultActions.andDo(print())
+                .andExpect(jsonPath("$.code").value(BAD_REQUEST.value()))
+                .andExpect(jsonPath("$.data").value(PARAMETER_INVALID.getDetail()));
+
+        verify(grantRoleService, never()).grantRoleToMember(userId, result);
+
     }
 }
