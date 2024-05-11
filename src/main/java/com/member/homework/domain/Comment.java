@@ -43,6 +43,15 @@ public class Comment extends BaseTimeEntity {
         this.activeYn = activeYn;
     }
 
+    public Comment of(String author, String content, boolean deleteYn, boolean activeYn) {
+        return Comment.builder()
+                .author(author)
+                .content(content)
+                .deleteYn(deleteYn)
+                .activeYn(activeYn)
+                .build();
+    }
+
     public void updateCommentContent(String content) {
         this.content = content;
     }
