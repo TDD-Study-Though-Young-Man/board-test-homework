@@ -1,8 +1,8 @@
-package com.member.homework.service;
+package com.member.homework.service.admin;
 
 import com.member.homework.domain.Member;
 import com.member.homework.dto.request.LoginMemberCommand;
-import com.member.homework.repository.MemberRepository;
+import com.member.homework.repository.member.MemberRepository;
 import com.member.homework.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ public class AdminLoginService {
     private final PasswordUtil passwordUtil;
 
     public String login(LoginMemberCommand command) {
-        Member findMember = memberRepository.findById(command.getId())
+        Member findMember = memberRepository.findByLoginId(command.getLoginId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
 
         passwordUtil.checkPassword(command.getPassword(), findMember.getPassword());

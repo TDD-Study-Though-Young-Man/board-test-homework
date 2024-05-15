@@ -2,7 +2,7 @@ package com.member.homework.controller;
 
 import com.member.homework.common.BaseResponse;
 import com.member.homework.dto.request.LoginMemberCommand;
-import com.member.homework.service.AdminLoginService;
+import com.member.homework.service.admin.AdminLoginService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

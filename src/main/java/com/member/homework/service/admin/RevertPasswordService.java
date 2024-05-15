@@ -1,7 +1,7 @@
-package com.member.homework.service;
+package com.member.homework.service.admin;
 
 import com.member.homework.domain.Member;
-import com.member.homework.repository.MemberRepository;
+import com.member.homework.repository.member.MemberRepository;
 import com.member.homework.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

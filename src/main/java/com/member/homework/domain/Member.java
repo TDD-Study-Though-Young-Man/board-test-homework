@@ -19,8 +19,8 @@ public class Member extends BaseTimeEntity {
     @Column(name = "member_id", columnDefinition = "INTEGER")
     private Long memberId;
 
-    @Column(name = "id", columnDefinition = "VARCHAR(30)")
-    private String id;
+    @Column(name = "login_id", columnDefinition = "VARCHAR(30)")
+    private String loginId;
 
     @Column(name = "password", columnDefinition = "VARCHAR(200)")
     private String password;
@@ -38,14 +38,14 @@ public class Member extends BaseTimeEntity {
     private List<Comment> comments = new ArrayList<>();
 
     @Builder
-    private Member(String id, String password, String name) {
-        this.id = id;
+    private Member(String loginId, String password, String name) {
+        this.loginId = loginId;
         this.password = password;
         this.name = name;
     }
 
-    public void updateMember(String id, String password, String name) {
-        this.id = id;
+    public void updateMember(String loginId, String password, String name) {
+        this.loginId = loginId;
         this.password = password;
         this.name = name;
     }
@@ -60,9 +60,9 @@ public class Member extends BaseTimeEntity {
         memberRole.setMember(this);
     }
 
-    public static Member of(String id, String password, String name) {
+    public static Member of(String loginId, String password, String name) {
         return Member.builder()
-                .id(id)
+                .loginId(loginId)
                 .name(name)
                 .password(password)
                 .build();
