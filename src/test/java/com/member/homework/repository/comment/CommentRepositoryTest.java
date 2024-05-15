@@ -63,7 +63,7 @@ public class CommentRepositoryTest {
         Comment savedComment = commentRepository.save(comment);
 
         //when
-        savedComment.updateCommentDeleted(true);
+        savedComment.softDeleteComment();
         Comment foundComment = commentRepository.findById(savedComment.getCommentId()).orElseThrow();
 
         //then

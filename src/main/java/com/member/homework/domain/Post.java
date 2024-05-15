@@ -18,14 +18,6 @@ public class Post extends BaseTimeEntity {
     @Column(name = "post_id", columnDefinition = "INTEGER", nullable = false)
     private Long postId;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-
     @Column(name = "title", columnDefinition = "VARCHAR(100)", nullable = false)
     private String title;
 
@@ -41,11 +33,19 @@ public class Post extends BaseTimeEntity {
     @Column(name = "active_yn", columnDefinition = "BOOLEAN", nullable = false)
     private boolean activeYn;
 
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
 
     @Builder
-    public Post(String title, String content, String author, boolean deleteYn, boolean activeYn) {
+    private Post(String title, String content, String author, boolean deleteYn, boolean activeYn) {
         this.title = title;
         this.content = content;
         this.author = author;

@@ -15,14 +15,6 @@ public class Comment extends BaseTimeEntity {
     @Column(name = "comment_id", columnDefinition = "INTEGER", nullable = false)
     private Long commentId;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
-
-    @ManyToOne
-    @JoinColumn(name = "post_id")
-    private Post post;
-
     @Column(name = "author", columnDefinition = "VARCHAR(30)", nullable = false)
     private String author;
 
@@ -35,8 +27,16 @@ public class Comment extends BaseTimeEntity {
     @Column(name = "active_yn", columnDefinition = "BOOLEAN", nullable = false)
     private boolean activeYn;
 
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
+
     @Builder
-    public Comment(String author, String content, boolean deleteYn, boolean activeYn) {
+    private Comment(String author, String content, boolean deleteYn, boolean activeYn) {
         this.author = author;
         this.content = content;
         this.deleteYn = deleteYn;
@@ -56,7 +56,12 @@ public class Comment extends BaseTimeEntity {
         this.content = content;
     }
 
-    public void updateCommentDeleted(Boolean deleteYn) {
-        this.deleteYn = deleteYn;
+    public void softDeleteComment() {
+        this.deleteYn = true;
     }
+
+    public void restoreDeletedComment() {
+        this.deleteYn = false;
+    }
+
 }
