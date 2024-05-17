@@ -51,9 +51,9 @@ class ModifyMemberControllerTest {
         //then
         resultActions.andDo(print())
                 .andExpect(jsonPath("$.code").value(HttpStatus.OK.value()))
-                .andExpect(jsonPath("$.data['id']").value(request.getId()))
-                .andExpect(jsonPath("$.data['password']").value(request.getPassword()))
-                .andExpect(jsonPath("$.data['name']").value(request.getName()));
+                .andExpect(jsonPath("$.data['id']").value(request.id()))
+                .andExpect(jsonPath("$.data['password']").value(request.password()))
+                .andExpect(jsonPath("$.data['name']").value(request.name()));
     }
 
     @Test

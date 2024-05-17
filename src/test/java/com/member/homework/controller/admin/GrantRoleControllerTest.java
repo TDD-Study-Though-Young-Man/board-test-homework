@@ -2,6 +2,7 @@ package com.member.homework.controller.admin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.member.homework.controller.admin.GrantRoleController;
+import com.member.homework.dto.request.GrantRoleCommand;
 import com.member.homework.service.admin.GrantRoleService;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -44,11 +45,11 @@ class GrantRoleControllerTest {
         // given
         Long userId = 1L;
 
-        List<String> result = List.of("MEMBER");
+        GrantRoleCommand grantRoleCommand = new GrantRoleCommand(List.of("MEMBER"));
 
         //when
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/users/{userId}/roles", userId)
-                .content(objectMapper.writeValueAsString(result))
+                .content(objectMapper.writeValueAsString(grantRoleCommand))
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(StandardCharsets.UTF_8));
 
@@ -65,11 +66,12 @@ class GrantRoleControllerTest {
         // given
         Long userId = -1L;
 
-        List<String> result = List.of("MEMBER");
+        GrantRoleCommand grantRoleCommand = new GrantRoleCommand(List.of("MEMBER"));
+
 
         //when
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/users/{userId}/roles", userId)
-                .content(objectMapper.writeValueAsString(result))
+                .content(objectMapper.writeValueAsString(grantRoleCommand))
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(StandardCharsets.UTF_8));
 
@@ -78,7 +80,7 @@ class GrantRoleControllerTest {
                 .andExpect(jsonPath("$.code").value(BAD_REQUEST.value()))
                 .andExpect(jsonPath("$.data").value(PARAMETER_INVALID.getDetail()));
 
-        verify(grantRoleService, never()).grantRoleToMember(userId, result);
+        verify(grantRoleService, never()).grantRoleToMember(userId, grantRoleCommand.roleList());
 
     }
 }

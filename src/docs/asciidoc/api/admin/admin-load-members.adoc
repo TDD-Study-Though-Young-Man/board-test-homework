@@ -1,0 +1,9 @@
+[[admin-login]]
+=== 관리자 로그인
+
+==== HTTP Request
+include::{snippets}/admin-load-members/http-request.adoc[]
+
+==== HTTP Response
+include::{snippets}/admin-load-members/http-response.adoc[]
+include::{snippets}/admin-load-members/response-fields.adoc[]

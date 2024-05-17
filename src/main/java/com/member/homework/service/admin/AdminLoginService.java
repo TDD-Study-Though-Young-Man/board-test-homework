@@ -15,10 +15,10 @@ public class AdminLoginService {
     private final PasswordUtil passwordUtil;
 
     public String login(LoginMemberCommand command) {
-        Member findMember = memberRepository.findByLoginId(command.getLoginId())
+        Member findMember = memberRepository.findByLoginId(command.loginId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
 
-        passwordUtil.checkPassword(command.getPassword(), findMember.getPassword());
+        passwordUtil.checkPassword(command.password(), findMember.getPassword());
         checkIsAdmin(findMember);
 
         return "jwttoken";

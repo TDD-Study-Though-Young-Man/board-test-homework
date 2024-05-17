@@ -1,6 +1,7 @@
 package com.member.homework.controller.admin;
 
 import com.member.homework.common.dto.ApiResponse;
+import com.member.homework.dto.request.GrantRoleCommand;
 import com.member.homework.service.admin.GrantRoleService;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,8 @@ public class GrantRoleController {
 
     @PostMapping("/api/admin/users/{userId}/roles")
     public ResponseEntity<ApiResponse<Long>> grantRoleToMember
-            (@PathVariable("userId") @Positive Long userId, @RequestBody List<String> roleList) {
-        grantRoleService.grantRoleToMember(userId, roleList);
+            (@PathVariable("userId") @Positive Long userId, @RequestBody GrantRoleCommand grantRoleCommand) {
+        grantRoleService.grantRoleToMember(userId, grantRoleCommand.roleList());
         return ResponseEntity.ok(ApiResponse.ok(userId));
     }
 }
