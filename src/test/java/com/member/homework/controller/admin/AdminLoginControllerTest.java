@@ -1,7 +1,8 @@
-package com.member.homework.controller;
+package com.member.homework.controller.admin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.member.homework.config.SecurityConfig;
+import com.member.homework.controller.admin.AdminLoginController;
 import com.member.homework.dto.request.LoginMemberCommand;
 import com.member.homework.service.admin.AdminLoginService;
 import org.junit.jupiter.api.Test;
@@ -47,7 +48,7 @@ class AdminLoginControllerTest {
         // then
         actions.andExpect(status().isOk())
                 .andExpect(jsonPath("$.data").value("jwttoken"))
-                .andExpect(jsonPath("$.statusCode").value(200))
+                .andExpect(jsonPath("$.code").value(200))
                 .andExpect(jsonPath("$.message").value("OK"));
     }
 
@@ -66,9 +67,8 @@ class AdminLoginControllerTest {
 
         // then
         actions.andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.data").isEmpty())
-                .andExpect(jsonPath("$.statusCode").value(400))
-                .andExpect(jsonPath("$.message").value("아이디는 비어있을 수 없습니다."));
+                .andExpect(jsonPath("$.data['loginId']").value("아이디는 비어있을 수 없습니다."))
+                .andExpect(jsonPath("$.code").value(400));
     }
 
     @Test
@@ -85,9 +85,8 @@ class AdminLoginControllerTest {
 
         // then
         actions.andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.data").isEmpty())
-                .andExpect(jsonPath("$.statusCode").value(400))
-                .andExpect(jsonPath("$.message").value("비밀번호는 비어있을 수 없습니다."));
+                .andExpect(jsonPath("$.data['password']").value("비밀번호는 비어있을 수 없습니다."))
+                .andExpect(jsonPath("$.code").value(400));
     }
 
     private LoginMemberCommand createLoginMemberCommand(String id, String password) {

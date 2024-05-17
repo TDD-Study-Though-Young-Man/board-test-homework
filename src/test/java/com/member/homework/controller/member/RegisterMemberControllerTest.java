@@ -1,9 +1,8 @@
-package com.member.homework.controller;
+package com.member.homework.controller.member;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.member.homework.controller.admin.RegisterMemberController;
 import com.member.homework.dto.request.RegisterMemberCommand;
-import com.member.homework.service.RegisterMemberService;
+import com.member.homework.service.member.RegisterMemberService;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -72,7 +71,7 @@ class RegisterMemberControllerTest {
         resultActions.andDo(print())
                 .andExpect(jsonPath("$.data").isMap())
                 .andExpect(jsonPath("$.code").value(HttpStatus.BAD_REQUEST.value()))
-                .andExpect(jsonPath("$.data['id']").value(ID_CANNOT_BE_EMPTY.getDetail()));
+                .andExpect(jsonPath("$.data['loginId']").value(ID_CANNOT_BE_EMPTY.getDetail()));
 
     }
 
@@ -129,7 +128,7 @@ class RegisterMemberControllerTest {
         resultActions.andDo(print())
                 .andExpect(jsonPath("$.data").isMap())
                 .andExpect(jsonPath("$.code").value(HttpStatus.BAD_REQUEST.value()))
-                .andExpect(jsonPath("$.data['id']").value(ID_CANNOT_BE_EMPTY.getDetail()))
+                .andExpect(jsonPath("$.data['loginId']").value(ID_CANNOT_BE_EMPTY.getDetail()))
                 .andExpect(jsonPath("$.data['password']").value(PASSWORD_CANNOT_BE_EMPTY.getDetail()));
     }
 
@@ -149,7 +148,7 @@ class RegisterMemberControllerTest {
         resultActions.andDo(print())
                 .andExpect(jsonPath("$.data").isMap())
                 .andExpect(jsonPath("$.code").value(HttpStatus.BAD_REQUEST.value()))
-                .andExpect(jsonPath("$.data['id']").value(ID_CANNOT_BE_EMPTY.getDetail()))
+                .andExpect(jsonPath("$.data['loginId']").value(ID_CANNOT_BE_EMPTY.getDetail()))
                 .andExpect(jsonPath("$.data['name']").value(NAME_CANNOT_BE_EMPTY.getDetail()))
                 .andExpect(jsonPath("$.data['password']").value(PASSWORD_CANNOT_BE_EMPTY.getDetail()));
     }

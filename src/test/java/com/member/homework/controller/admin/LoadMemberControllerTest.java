@@ -1,6 +1,7 @@
-package com.member.homework.controller;
+package com.member.homework.controller.admin;
 
 import com.member.homework.config.SecurityConfig;
+import com.member.homework.controller.admin.LoadMemberController;
 import com.member.homework.dto.response.MemberDto;
 import com.member.homework.service.admin.LoadMemberService;
 import org.junit.jupiter.api.Test;
@@ -55,7 +56,7 @@ class LoadMemberControllerTest {
                 .andExpect(jsonPath("$.data[0].name").value("회원1"))
                 .andExpect(jsonPath("$.data[1].name").value("회원2"))
                 .andExpect(jsonPath("$.data[2].name").value("회원3"))
-                .andExpect(jsonPath("$.statusCode").value(200))
+                .andExpect(jsonPath("$.code").value(200))
                 .andExpect(jsonPath("$.message").value("OK"));
     }
 

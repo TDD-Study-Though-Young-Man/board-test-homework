@@ -1,7 +1,7 @@
-package com.member.homework.controller;
+package com.member.homework.controller.admin;
 
 import com.member.homework.controller.admin.RemoveMemberController;
-import com.member.homework.service.RemoveMemberService;
+import com.member.homework.service.admin.RemoveMemberService;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

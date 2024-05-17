@@ -1,8 +1,8 @@
-package com.member.homework.controller;
+package com.member.homework.controller.admin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.member.homework.controller.admin.GrantRoleController;
-import com.member.homework.service.GrantRoleService;
+import com.member.homework.service.admin.GrantRoleService;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

@@ -1,9 +1,9 @@
-package com.member.homework.controller;
+package com.member.homework.controller.member;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.member.homework.controller.admin.ModifyMemberController;
+import com.member.homework.controller.member.ModifyMemberController;
 import com.member.homework.dto.request.ModifyMemberCommand;
-import com.member.homework.service.ModifyMemberService;
+import com.member.homework.service.member.ModifyMemberService;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

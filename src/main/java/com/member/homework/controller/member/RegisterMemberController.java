@@ -1,8 +1,8 @@
-package com.member.homework.controller.admin;
+package com.member.homework.controller.member;
 
+import com.member.homework.common.dto.ApiResponse;
 import com.member.homework.dto.request.RegisterMemberCommand;
-import com.member.homework.dto.response.ApiResponse;
-import com.member.homework.service.RegisterMemberService;
+import com.member.homework.service.member.RegisterMemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
