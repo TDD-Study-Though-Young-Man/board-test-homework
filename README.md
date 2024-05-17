@@ -1,3 +1,5 @@
+# 문서 보러 가기 ➡️ [API 문서 링크](src/main/resources/static/index.html)
+
 # API Documentation
 
 # 1️⃣ API Specification
