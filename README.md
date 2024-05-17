@@ -1,4 +1,4 @@
-# 문서 보러 가기 ➡️ [API 문서 링크](src/main/resources/static/index.html)
+# 문서 보러 가기 ➡️ [API 문서 링크](https://tdd-study-though-young-man.github.io/board-test-homework/src/main/resources/static/docs)
 
 # API Documentation
 
