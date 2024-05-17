@@ -62,6 +62,24 @@ asciidoctor {
     dependsOn test
 }
 
+asciidoctor.doFirst { // asciidoctor Task가 수행될 때 가장 먼저 수행
+    delete file('src/main/resources/static/docs')
+}
+
+
+// asccidoctor 작업 이후 생성된 HTML 파일을 static/docs 로 copy
+tasks.register('createDocument', Copy) {
+    dependsOn asciidoctor
+
+    from file("build/docs/asciidoc")
+    into file("src/main/resources/static/docs")
+}
+
+// build 전 createDocument(REST Docs 문서화) 실행!
+build {
+    dependsOn createDocument
+}
+
 bootJar {
     dependsOn asciidoctor
     from("${asciidoctor.outputDir}") {

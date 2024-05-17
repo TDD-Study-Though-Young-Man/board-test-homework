@@ -40,7 +40,7 @@ class LoadMemberServiceTest {
 
         // then
         assertThat(findMemberList).hasSize(3)
-                .extracting("id", "name")
+                .extracting("loginId", "name")
                 .containsExactlyInAnyOrder(
                     tuple("mb1", "01"),
                     tuple("mb2", "02"),

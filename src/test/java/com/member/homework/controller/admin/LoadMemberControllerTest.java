@@ -51,9 +51,9 @@ class LoadMemberControllerTest {
 
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.data[0].id").value("mb1"))
-                .andExpect(jsonPath("$.data[1].id").value("mb2"))
-                .andExpect(jsonPath("$.data[2].id").value("mb3"))
+                .andExpect(jsonPath("$.data[0].loginId").value("mb1"))
+                .andExpect(jsonPath("$.data[1].loginId").value("mb2"))
+                .andExpect(jsonPath("$.data[2].loginId").value("mb3"))
                 .andExpect(jsonPath("$.data[0].name").value("회원1"))
                 .andExpect(jsonPath("$.data[1].name").value("회원2"))
                 .andExpect(jsonPath("$.data[2].name").value("회원3"))

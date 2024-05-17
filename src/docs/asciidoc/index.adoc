@@ -13,3 +13,5 @@ endif::[]
 === ADMIN API
 
 include::api/admin/admin-login.adoc[]
+include::api/admin/admin-grant-role.adoc[]
+include::api/admin/admin-load-members.adoc[]
