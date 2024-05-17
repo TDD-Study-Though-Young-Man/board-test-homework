@@ -17,17 +17,17 @@
 |  | 카테고리 조회 | 관리자   | GET    | 관리자가 모든 카테고리를 조회                                     | `/categories`             | 없음                                                                                                                                                             |
 |  | 카테고리 삭제 | 관리자   | DELETE | 관리자가 특정 카테고리를 삭제                                     | `/categories/{categoryId}`| 없음                                                                                                                                                             |
 |  | 카테고리 수정 | 관리자   | PUT    | 사용자가 카테고리의 이름, 설명, 부모 카테고리를 수정               | `/categories/{categoryId}`| `{"name": "String", "description": "String", "parentId": "int"}`                                                                                                 |
-# 2️⃣ Authentication Rule (인증, 인가 방법)
+# 2️⃣ Authorization Rule (인증, 인가 방법)
 1. 사용자는 "MEMBER", 관리자는 "ADMIN" 권한이 있어야 API 접근이 가능합니다.
-2. HttpHeader에 { "Autentication" : "권한" }을 key-value로 보내주면 권한을 체크 후 API 접근이 가능합니다.
-3. 권한을 주지 않고 헤더 없이 보낼 경우, { "Authentication" : "NONE" } 으로 처리됩니다.
+2. HttpHeader에 { "Authorization" : "권한" }을 key-value로 보내주면 권한을 체크 후 API 접근이 가능합니다.
+3. 권한을 주지 않고 헤더 없이 보낼 경우, { "Authorization" : "NONE" } 으로 처리됩니다.
 
 ```java
 mockMvc.perform(get("/api/admin/users")
                 .contentType(
                         MediaType.APPLICATION_JSON)
                         // header 지정하여 사용 -> ADMIN, MEMBER와 같은 일반 문자열 사용
-                        .header("Authentication", "ADMIN")
+                        .header("Authorization", "ADMIN")
                 ).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data[0].id").value("mb1"))
