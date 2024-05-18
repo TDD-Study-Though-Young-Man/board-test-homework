@@ -1,5 +1,5 @@
 [[admin-login]]
-=== 관리자 로그인
+=== 관리자 회원 전체 조회
 
 ==== HTTP Request
 include::{snippets}/admin-load-members/http-request.adoc[]

@@ -1,5 +1,5 @@
 [[admin-login]]
-=== 관리자 로그인
+=== 관리자 회원 권한 부여
 
 ==== HTTP Request
 include::{snippets}/admin-grant-role/http-request.adoc[]
