@@ -456,7 +456,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_response_fields">Response Fields</a></li>
 </ul>
 </li>
-<li><a href="#admin-login">관리자 로그인</a>
+<li><a href="#admin-login">관리자 회원 권한 부여</a>
 <ul class="sectlevel3">
 <li><a href="#_http_request_2">HTTP Request</a></li>
 <li><a href="#_request_fields_2">Request Fields</a></li>
@@ -464,7 +464,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_response_fields_2">Response Fields</a></li>
 </ul>
 </li>
-<li><a href="#admin-login">관리자 로그인</a>
+<li><a href="#admin-login">관리자 회원 전체 조회</a>
 <ul class="sectlevel3">
 <li><a href="#_http_request_3">HTTP Request</a></li>
 <li><a href="#_http_response_3">HTTP Response</a></li>
@@ -485,15 +485,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h4 id="_http_request"><a class="link" href="#_http_request">HTTP Request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/admin/login HTTP/1.1
 Content-Type: application/json
-Content-Length: 80
+Content-Length: 49
+Host: localhost:8080
 
 {
-  "code" : 200,
-  "status" : "OK",
-  "data" : "jwtToken",
-  "message" : "OK"
+  "loginId" : "id",
+  "password" : "password"
 }</code></pre>
 </div>
 </div>
@@ -595,7 +594,7 @@ Content-Length: 80
 </div>
 </div>
 <div class="sect2">
-<h3 id="admin-login"><a class="link" href="#admin-login">관리자 로그인</a></h3>
+<h3 id="admin-login"><a class="link" href="#admin-login">관리자 회원 권한 부여</a></h3>
 <div class="sect3">
 <h4 id="_http_request_2"><a class="link" href="#_http_request_2">HTTP Request</a></h4>
 <div class="listingblock">
@@ -703,7 +702,7 @@ Content-Length: 71
 </div>
 </div>
 <div class="sect2">
-<h3 id="admin-login"><a class="link" href="#admin-login">관리자 로그인</a></h3>
+<h3 id="admin-login"><a class="link" href="#admin-login">관리자 회원 전체 조회</a></h3>
 <div class="sect3">
 <h4 id="_http_request_3"><a class="link" href="#_http_request_3">HTTP Request</a></h4>
 <div class="listingblock">
@@ -800,7 +799,7 @@ Content-Length: 198
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-05-17 21:21:12 +0900
+Last updated 2024-05-18 13:42:02 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
