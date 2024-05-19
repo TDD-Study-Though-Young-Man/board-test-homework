@@ -1,0 +1,10 @@
+[[admin-login]]
+=== 관리자 회원 권한 부여
+
+==== HTTP Request
+include::{snippets}/admin-grant-role/http-request.adoc[]
+include::{snippets}/admin-grant-role/request-fields.adoc[]
+
+==== HTTP Response
+include::{snippets}/admin-grant-role/http-response.adoc[]
+include::{snippets}/admin-grant-role/response-fields.adoc[]

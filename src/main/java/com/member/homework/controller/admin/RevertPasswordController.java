@@ -1,7 +1,7 @@
 package com.member.homework.controller.admin;
 
-import com.member.homework.dto.response.ApiResponse;
-import com.member.homework.service.RevertPasswordService;
+import com.member.homework.common.dto.ApiResponse;
+import com.member.homework.service.admin.RevertPasswordService;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

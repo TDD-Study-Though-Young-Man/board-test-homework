@@ -1,4 +1,4 @@
-package com.member.homework.dto.response;
+package com.member.homework.common.dto;
 
 import lombok.Builder;
 import lombok.Getter;
