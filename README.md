@@ -188,6 +188,7 @@ mockMvc.perform(get("/api/admin/users")
     - 사용자 이름 누락 : `{"code":400,"status":"BAD_REQUEST","data":{"name":["이름은 비어있을 수 없습니다."]},"message":"BAD_REQUEST"}`
     - 사용자 아이디 비밀번호 누락 : `{"code":400,"status":"BAD_REQUEST","data":{"password":["비밀번호는 비어있을 수 없습니다."],"loginId":["아이디는 비어있을 수 없습니다."]},"message":"BAD_REQUEST"}`
     - 사용자 아이디, 비밀번호, 이름 누락 : `{"code":400,"status":"BAD_REQUEST","data":{"password":["비밀번호는 비어있을 수 없습니다."],"loginId":["아이디는 비어있을 수 없습니다."],"name":["이름은 비어있을 수 없습니다."]},"message":"BAD_REQUEST"}`
+    - 관리자 권한 없이 접근 : `{ “status” : 403, “error” : “관리자 권한이 없습니다. 관리자 페이지에 진입할 수 없습니다.” }`
   
 - Possible Errors
     - `400 Bad Request` : 필수 필드 누락, 잘못된 데이터 포맷, 또는 검증 실패
@@ -208,12 +209,13 @@ mockMvc.perform(get("/api/admin/users")
             - `@NotBlank(message = "이름은 비어있을 수 없습니다.")`
 
 - Method Return Type (JSON)
-    - 회원 수정 : `{"code":200,"status":"OK","data":{"id":"memberId","password":"memberPassword","name":"memberName"},"message":"OK"}`
+    - 사용자 수정 : `{"code":200,"status":"OK","data":{"id":"memberId","password":"memberPassword","name":"memberName"},"message":"OK"}`
     - 아이디가 누락된 경우 : `{"code":400,"status":"BAD_REQUEST","data":{"id":["아이디는 비어있을 수 없습니다."]},"message":"BAD_REQUEST"}`
     - 사용자 비밀번호가 누락된 경우 : `{"code":400,"status":"BAD_REQUEST","data":{"password":["비밀번호는 비어있을 수 없습니다."]},"message":"BAD_REQUEST"}`
     - 사용자 이름이 누락된 경우 : `{"code":400,"status":"BAD_REQUEST","data":{"name":["이름은 비어있을 수 없습니다."]},"message":"BAD_REQUEST"}`
     - 사용자 아이디와 비밀번호가 누락된 경우 : `{"code":400,"status":"BAD_REQUEST","data":{"password":["비밀번호는 비어있을 수 없습니다."],"loginId":["아이디는 비어있을 수 없습니다."]},"message":"BAD_REQUEST"}`
     - 사용자 아이디와 비밀번호 및 이름이 누락된 경우 : `{"code":400,"status":"BAD_REQUEST","data":{"password":["비밀번호는 비어있을 수 없습니다."],"loginId":["아이디는 비어있을 수 없습니다."],"name":["이름은 비어있을 수 없습니다."]},"message":"BAD_REQUEST"}`
+    - 관리자 권한 없이 접근 : `{ “status” : 403, “error” : “관리자 권한이 없습니다. 관리자 페이지에 진입할 수 없습니다.” }`
 
 - Possible Errors
     - `400 Bad Request` : 필수 필드 누락, 잘못된 데이터 포맷, 또는 검증 실패
@@ -229,6 +231,7 @@ mockMvc.perform(get("/api/admin/users")
 - Method Return Type (JSON)
     - 사용자 삭제 : `{"code":200,"status":"OK","data":1,"message":"OK"}`
     - 사용자 아이디가 0 이하인 경우 : `{"code":400,"status":"BAD_REQUEST","data":"유효하지 않은 값입니다.","message":"BAD_REQUEST"}`
+    - 관리자 권한 없이 접근 : `{ “status” : 403, “error” : “관리자 권한이 없습니다. 관리자 페이지에 진입할 수 없습니다.” }`
 - Possible Errors
     - `400 Bad Request` : 필수 필드 누락, 잘못된 데이터 포맷, 또는 검증 실패
     - `403 Forbidden` : 관리자 권한 없이 관리자 권한 접근
@@ -243,6 +246,7 @@ mockMvc.perform(get("/api/admin/users")
 - Method Return Type (JSON)
     - 비밀번호 초기화 :  `{"code":200,"status":"OK","data":1,"message":"OK"}`
     - 사용자 아이디가 0 이하인 경우 : `{"code":400,"status":"BAD_REQUEST","data":"유효하지 않은 값입니다.","message":"BAD_REQUEST"}`
+    - 관리자 권한 없이 접근 : `{ “status” : 403, “error” : “관리자 권한이 없습니다. 관리자 페이지에 진입할 수 없습니다.” }`
 - Possible Errors
     - `400 Bad Request` : 필수 필드 누락, 잘못된 데이터 포맷, 또는 검증 실패
     - `403 Forbidden` : 관리자 권한 없이 관리자 권한 접근
@@ -254,13 +258,11 @@ mockMvc.perform(get("/api/admin/users")
 - Request Body
     - `userId` : Long, 유저 아이디
     - `roleList` : List<String>, 권한 리스트
-        - `@Size(max = 200, message = "카테고리 설명은 200자를 초과할 수 없습니다.")`
-    - `parentId` : int, 부모 카테고리 id (선택 사항)
 
 - Method Return Type (JSON)
     - 권한 생성 :  `{"code":200,"status":"OK","data":1,"message":"OK"}`
     - 권한 생성 실패 : `"code":400,"status":"BAD_REQUEST","data":"유효하지 않은 값입니다.","message":"BAD_REQUEST"}`
-    - 관리가 권한 없이 접근 : `{ “status” : 403, “error” : “관리자 권한이 없습니다. 관리자 페이지에 진입할 수 없습니다.” }`
+    - 관리자 권한 없이 접근 : `{ “status” : 403, “error” : “관리자 권한이 없습니다. 관리자 페이지에 진입할 수 없습니다.” }`
 - Possible Errors
     - `400 Bad Request` : 필수 필드 누락, 잘못된 데이터 포맷, 또는 검증 실패
     - `403 Forbidden` : 관리자 권한 없이 관리자 권한 접근
