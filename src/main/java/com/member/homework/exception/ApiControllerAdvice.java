@@ -28,13 +28,13 @@ public class ApiControllerAdvice {
                         Collectors.mapping(FieldError::getDefaultMessage, Collectors.toList())));
 
         return ResponseEntity.badRequest()
-                .body(ApiResponse.of(BAD_REQUEST, BAD_REQUEST.getReasonPhrase(), errorMap));
+                .body(ApiResponse.of(BAD_REQUEST, errorMap));
     }
 
     @ExceptionHandler(HandlerMethodValidationException.class)
     public ResponseEntity<ApiResponse<String>> handlerMethodValidationException() {
 
         return ResponseEntity.badRequest()
-                .body(ApiResponse.of(BAD_REQUEST, null, ErrorCode.PARAMETER_INVALID.getDetail()));
+                .body(ApiResponse.of(BAD_REQUEST, ErrorCode.PARAMETER_INVALID.getDetail()));
     }
 }

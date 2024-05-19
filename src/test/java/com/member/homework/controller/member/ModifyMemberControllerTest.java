@@ -1,16 +1,17 @@
 package com.member.homework.controller.member;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.member.homework.controller.member.ModifyMemberController;
+import com.member.homework.config.SecurityConfig;
 import com.member.homework.dto.request.ModifyMemberCommand;
 import com.member.homework.service.member.ModifyMemberService;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,7 +22,7 @@ import static com.member.homework.exception.ErrorCode.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-@AutoConfigureMockMvc(addFilters = false)
+@Import(SecurityConfig.class)
 @WebMvcTest(controllers = ModifyMemberController.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ModifyMemberControllerTest {
@@ -44,9 +45,10 @@ class ModifyMemberControllerTest {
 
         //when
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.patch("/api/admin/users/{userId}", userId)
-                .content(objectMapper.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding(StandardCharsets.UTF_8));
+                .characterEncoding(StandardCharsets.UTF_8)
+                .content(objectMapper.writeValueAsString(request))
+                .header(HttpHeaders.AUTHORIZATION, "ADMIN"));
 
         //then
         resultActions.andDo(print())
@@ -65,9 +67,10 @@ class ModifyMemberControllerTest {
 
         //when
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.patch("/api/admin/users/{userId}", userId)
-                .content(objectMapper.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding(StandardCharsets.UTF_8));
+                .characterEncoding(StandardCharsets.UTF_8)
+                .content(objectMapper.writeValueAsString(request))
+                .header(HttpHeaders.AUTHORIZATION, "ADMIN"));
 
         //then
         resultActions.andDo(print())
@@ -85,9 +88,10 @@ class ModifyMemberControllerTest {
 
         //when
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.patch("/api/admin/users/{userId}", userId)
-                .content(objectMapper.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding(StandardCharsets.UTF_8));
+                .characterEncoding(StandardCharsets.UTF_8)
+                .content(objectMapper.writeValueAsString(request))
+                .header(HttpHeaders.AUTHORIZATION, "ADMIN"));
 
         //then
         resultActions.andDo(print())
@@ -105,9 +109,10 @@ class ModifyMemberControllerTest {
 
         //when
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.patch("/api/admin/users/{userId}", userId)
-                .content(objectMapper.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding(StandardCharsets.UTF_8));
+                .characterEncoding(StandardCharsets.UTF_8)
+                .content(objectMapper.writeValueAsString(request))
+                .header(HttpHeaders.AUTHORIZATION, "ADMIN"));
         // then
         resultActions.andDo(print())
                 .andExpect(jsonPath("$.data").isMap())
@@ -123,9 +128,10 @@ class ModifyMemberControllerTest {
 
         //when
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.patch("/api/admin/users/{userId}", userId)
-                .content(objectMapper.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding(StandardCharsets.UTF_8));
+                .characterEncoding(StandardCharsets.UTF_8)
+                .content(objectMapper.writeValueAsString(request))
+                .header(HttpHeaders.AUTHORIZATION, "ADMIN"));
 
         //then
         resultActions.andDo(print())
@@ -144,9 +150,10 @@ class ModifyMemberControllerTest {
 
         //when
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.patch("/api/admin/users/{userId}", userId)
-                .content(objectMapper.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding(StandardCharsets.UTF_8));
+                .characterEncoding(StandardCharsets.UTF_8)
+                .content(objectMapper.writeValueAsString(request))
+                .header(HttpHeaders.AUTHORIZATION, "ADMIN"));
 
         //then
         resultActions.andDo(print())

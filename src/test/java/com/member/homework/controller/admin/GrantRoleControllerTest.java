@@ -1,16 +1,17 @@
 package com.member.homework.controller.admin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.member.homework.controller.admin.GrantRoleController;
+import com.member.homework.config.SecurityConfig;
 import com.member.homework.dto.request.GrantRoleCommand;
 import com.member.homework.service.admin.GrantRoleService;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,7 +26,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-@AutoConfigureMockMvc(addFilters = false)
+@Import(SecurityConfig.class)
 @WebMvcTest(controllers = GrantRoleController.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class GrantRoleControllerTest {
@@ -51,6 +52,7 @@ class GrantRoleControllerTest {
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/users/{userId}/roles", userId)
                 .content(objectMapper.writeValueAsString(grantRoleCommand))
                 .contentType(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "ADMIN")
                 .characterEncoding(StandardCharsets.UTF_8));
 
         //then
@@ -73,6 +75,7 @@ class GrantRoleControllerTest {
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/users/{userId}/roles", userId)
                 .content(objectMapper.writeValueAsString(grantRoleCommand))
                 .contentType(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "ADMIN")
                 .characterEncoding(StandardCharsets.UTF_8));
 
         //then

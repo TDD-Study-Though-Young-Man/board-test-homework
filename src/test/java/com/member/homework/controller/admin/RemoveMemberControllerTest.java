@@ -1,14 +1,15 @@
 package com.member.homework.controller.admin;
 
-import com.member.homework.controller.admin.RemoveMemberController;
+import com.member.homework.config.SecurityConfig;
 import com.member.homework.service.admin.RemoveMemberService;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -22,7 +23,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@AutoConfigureMockMvc(addFilters = false)
+@Import(SecurityConfig.class)
 @WebMvcTest(controllers = RemoveMemberController.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class RemoveMemberControllerTest {
@@ -42,7 +43,8 @@ class RemoveMemberControllerTest {
         // when
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.delete("/api/admin/users/{userId}", userId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding(StandardCharsets.UTF_8));
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .header(HttpHeaders.AUTHORIZATION, "ADMIN"));
 
         //then
         resultActions.andDo(print())
@@ -59,7 +61,8 @@ class RemoveMemberControllerTest {
         // when
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.delete("/api/admin/users/{userId}", userId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding(StandardCharsets.UTF_8));
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .header(HttpHeaders.AUTHORIZATION, "ADMIN"));
 
         // then
         resultActions.andDo(print())

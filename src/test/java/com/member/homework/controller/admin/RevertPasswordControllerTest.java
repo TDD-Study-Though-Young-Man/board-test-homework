@@ -1,14 +1,15 @@
 package com.member.homework.controller.admin;
 
-import com.member.homework.controller.admin.RevertPasswordController;
+import com.member.homework.config.SecurityConfig;
 import com.member.homework.service.admin.RevertPasswordService;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -21,7 +22,7 @@ import static org.springframework.http.HttpStatus.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-@AutoConfigureMockMvc(addFilters = false)
+@Import(SecurityConfig.class)
 @WebMvcTest(controllers = RevertPasswordController.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class RevertPasswordControllerTest {
@@ -41,7 +42,8 @@ class RevertPasswordControllerTest {
         // when
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/admin/users/{userId}/password", userId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding(StandardCharsets.UTF_8));
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .header(HttpHeaders.AUTHORIZATION, "ADMIN"));
 
         // then
         resultActions.andDo(print())
@@ -59,7 +61,8 @@ class RevertPasswordControllerTest {
         // when
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/admin/users/{userId}/password", userId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding(StandardCharsets.UTF_8));
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .header(HttpHeaders.AUTHORIZATION, "ADMIN"));
 
         // then
         resultActions.andDo(print())
