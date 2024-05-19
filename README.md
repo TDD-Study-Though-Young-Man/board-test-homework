@@ -164,3 +164,103 @@ mockMvc.perform(get("/api/admin/users")
     - `400 Bad Request` : 게시글이 존재하는 카테고리를 수정하는 경우
     - `403 Forbidden` : 관리자 권한 없이 관리자 권한 접근
     - `404 Not Found` : 미존재 카테고리 수정하는 경우
+
+
+## 유저 관리 Presentation Layer 기능 (담당 : [khmgobe](https://github.com/khmgobe))
+
+1. **사용자 생성**
+- 목적 : 관리자가 사용자를 생성한다.
+- URL : `/api/admin/users`
+- Method : `POST`
+- Request Body
+    - `RegisterMemberCommand` : 사용자 생성 커맨드 객체
+      - `loginId` : String, 사용자 아이디
+          - `@NotBlank(message = "아이디는 비어있을 수 없습니다.")`
+      - `password` : String, 사용자 패스워드
+        - `@NotBlank(message = "비밀번호는 비어있을 수 없습니다.")`
+      - `name` : String, 사용자 이름
+        - `@NotBlank(message = "이름은 비어있을 수 없습니다.")`
+
+- Method Return Type (JSON)
+    - 사용자 생성 : `{"code":200,"status":"OK","data": {},"message":"OK"}`
+    - 사용자 아이디 누락 : `{"code":400,"status":"BAD_REQUEST","data":{"loginId":["아이디는 비어있을 수 없습니다."]},"message":"BAD_REQUEST"}`
+    - 사용자 비밀번호 누락 : `{"code":400,"status":"BAD_REQUEST","data":{"password":["비밀번호는 비어있을 수 없습니다."]},"message":"BAD_REQUEST"}`
+    - 사용자 이름 누락 : `{"code":400,"status":"BAD_REQUEST","data":{"name":["이름은 비어있을 수 없습니다."]},"message":"BAD_REQUEST"}`
+    - 사용자 아이디 비밀번호 누락 : `{"code":400,"status":"BAD_REQUEST","data":{"password":["비밀번호는 비어있을 수 없습니다."],"loginId":["아이디는 비어있을 수 없습니다."]},"message":"BAD_REQUEST"}`
+    - 사용자 아이디, 비밀번호, 이름 누락 : `{"code":400,"status":"BAD_REQUEST","data":{"password":["비밀번호는 비어있을 수 없습니다."],"loginId":["아이디는 비어있을 수 없습니다."],"name":["이름은 비어있을 수 없습니다."]},"message":"BAD_REQUEST"}`
+  
+- Possible Errors
+    - `400 Bad Request` : 필수 필드 누락, 잘못된 데이터 포맷, 또는 검증 실패
+    - `403 Forbidden` : 관리자 권한 없이 관리자 권한 접근
+
+2. **사용자 수정**
+- 목적 : 관리자가 사용자를 수정한다.
+- URL : `/api/admin/users`
+- Method : `PATCH`
+- Request Body
+    - `userId` : Long, 사용자 아이디 
+    - `ModifyMemberCommand` : 사용자 수정 커맨드 객체
+        - `id` : String, 아이디
+            - `@NotBlank(message = "아이디는 비어있을 수 없습니다.")`
+        - `password` : String, 사용자 패스워드
+            - `@NotBlank(message = "비밀번호는 비어있을 수 없습니다.")`
+        - `name` : String, 사용자 이름
+            - `@NotBlank(message = "이름은 비어있을 수 없습니다.")`
+
+- Method Return Type (JSON)
+    - 회원 수정 : `{"code":200,"status":"OK","data":{"id":"memberId","password":"memberPassword","name":"memberName"},"message":"OK"}`
+    - 아이디가 누락된 경우 : `{"code":400,"status":"BAD_REQUEST","data":{"id":["아이디는 비어있을 수 없습니다."]},"message":"BAD_REQUEST"}`
+    - 사용자 비밀번호가 누락된 경우 : `{"code":400,"status":"BAD_REQUEST","data":{"password":["비밀번호는 비어있을 수 없습니다."]},"message":"BAD_REQUEST"}`
+    - 사용자 이름이 누락된 경우 : `{"code":400,"status":"BAD_REQUEST","data":{"name":["이름은 비어있을 수 없습니다."]},"message":"BAD_REQUEST"}`
+    - 사용자 아이디와 비밀번호가 누락된 경우 : `{"code":400,"status":"BAD_REQUEST","data":{"password":["비밀번호는 비어있을 수 없습니다."],"loginId":["아이디는 비어있을 수 없습니다."]},"message":"BAD_REQUEST"}`
+    - 사용자 아이디와 비밀번호 및 이름이 누락된 경우 : `{"code":400,"status":"BAD_REQUEST","data":{"password":["비밀번호는 비어있을 수 없습니다."],"loginId":["아이디는 비어있을 수 없습니다."],"name":["이름은 비어있을 수 없습니다."]},"message":"BAD_REQUEST"}`
+
+- Possible Errors
+    - `400 Bad Request` : 필수 필드 누락, 잘못된 데이터 포맷, 또는 검증 실패
+    - `403 Forbidden` : 관리자 권한 없이 관리자 권한 접근
+
+3. **사용자 삭제**
+- 목적 : 관리자가 사용자를 삭제한다.
+- URL : `/api/admin/users/{userId}`
+- Method : `DELETE`
+- Request Body
+    - `userId` : Long, 사용자 아이디
+
+- Method Return Type (JSON)
+    - 사용자 삭제 : `{"code":200,"status":"OK","data":1,"message":"OK"}`
+    - 사용자 아이디가 0 이하인 경우 : `{"code":400,"status":"BAD_REQUEST","data":"유효하지 않은 값입니다.","message":"BAD_REQUEST"}`
+- Possible Errors
+    - `400 Bad Request` : 필수 필드 누락, 잘못된 데이터 포맷, 또는 검증 실패
+    - `403 Forbidden` : 관리자 권한 없이 관리자 권한 접근
+
+4. **사용자 비밀번호 초기화**
+- 목적 : 관리자가 사용자 비밀번호를 초기화한다.
+- URL : `/api/admin/users/{userId}/password`
+- Method : `POST`
+- Request Body
+    - `userId` : Long, 유저 아이디
+
+- Method Return Type (JSON)
+    - 비밀번호 초기화 :  `{"code":200,"status":"OK","data":1,"message":"OK"}`
+    - 사용자 아이디가 0 이하인 경우 : `{"code":400,"status":"BAD_REQUEST","data":"유효하지 않은 값입니다.","message":"BAD_REQUEST"}`
+- Possible Errors
+    - `400 Bad Request` : 필수 필드 누락, 잘못된 데이터 포맷, 또는 검증 실패
+    - `403 Forbidden` : 관리자 권한 없이 관리자 권한 접근
+
+5. **사용자 권한 부여**
+- 목적 : 관리자가 사용자에게 권한을 부여한다.
+- URL : `/api/admin/users/{userId}/roles`
+- Method : `POST`
+- Request Body
+    - `userId` : Long, 유저 아이디
+    - `roleList` : List<String>, 권한 리스트
+        - `@Size(max = 200, message = "카테고리 설명은 200자를 초과할 수 없습니다.")`
+    - `parentId` : int, 부모 카테고리 id (선택 사항)
+
+- Method Return Type (JSON)
+    - 권한 생성 :  `{"code":200,"status":"OK","data":1,"message":"OK"}`
+    - 권한 생성 실패 : `"code":400,"status":"BAD_REQUEST","data":"유효하지 않은 값입니다.","message":"BAD_REQUEST"}`
+    - 관리가 권한 없이 접근 : `{ “status” : 403, “error” : “관리자 권한이 없습니다. 관리자 페이지에 진입할 수 없습니다.” }`
+- Possible Errors
+    - `400 Bad Request` : 필수 필드 누락, 잘못된 데이터 포맷, 또는 검증 실패
+    - `403 Forbidden` : 관리자 권한 없이 관리자 권한 접근
