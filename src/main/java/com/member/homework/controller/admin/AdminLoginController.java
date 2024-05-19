@@ -1,6 +1,6 @@
-package com.member.homework.controller;
+package com.member.homework.controller.admin;
 
-import com.member.homework.common.BaseResponse;
+import com.member.homework.common.dto.ApiResponse;
 import com.member.homework.dto.request.LoginMemberCommand;
 import com.member.homework.service.admin.AdminLoginService;
 import jakarta.validation.Valid;
@@ -17,10 +17,10 @@ public class AdminLoginController {
     private final AdminLoginService adminLoginService;
 
     @PostMapping("/api/admin/login")
-    public ResponseEntity<BaseResponse<String>> login(@RequestBody @Valid final LoginMemberCommand loginMemberCommand) {
+    public ResponseEntity<ApiResponse<String>> login(@RequestBody @Valid final LoginMemberCommand loginMemberCommand) {
 
         return ResponseEntity.ok(
-                BaseResponse.ok(adminLoginService.login(loginMemberCommand))
+                ApiResponse.ok(adminLoginService.login(loginMemberCommand))
         );
     }
 }

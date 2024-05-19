@@ -1,7 +1,7 @@
 package com.member.homework.controller.admin;
 
-import com.member.homework.dto.response.ApiResponse;
-import com.member.homework.service.RemoveMemberService;
+import com.member.homework.common.dto.ApiResponse;
+import com.member.homework.service.admin.RemoveMemberService;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,7 @@
-package com.member.homework.controller;
+package com.member.homework.controller.admin;
 
 import com.member.homework.config.SecurityConfig;
+import com.member.homework.controller.admin.LoadMemberController;
 import com.member.homework.dto.response.MemberDto;
 import com.member.homework.service.admin.LoadMemberService;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -44,18 +46,18 @@ class LoadMemberControllerTest {
         ResultActions actions = mockMvc.perform(get("/api/admin/users")
                 .contentType(
                         MediaType.APPLICATION_JSON)
-                        .header("Authentication", "ADMIN")
+                        .header(HttpHeaders.AUTHORIZATION, "ADMIN")
                 ).andDo(print());
 
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.data[0].id").value("mb1"))
-                .andExpect(jsonPath("$.data[1].id").value("mb2"))
-                .andExpect(jsonPath("$.data[2].id").value("mb3"))
+                .andExpect(jsonPath("$.data[0].loginId").value("mb1"))
+                .andExpect(jsonPath("$.data[1].loginId").value("mb2"))
+                .andExpect(jsonPath("$.data[2].loginId").value("mb3"))
                 .andExpect(jsonPath("$.data[0].name").value("회원1"))
                 .andExpect(jsonPath("$.data[1].name").value("회원2"))
                 .andExpect(jsonPath("$.data[2].name").value("회원3"))
-                .andExpect(jsonPath("$.statusCode").value(200))
+                .andExpect(jsonPath("$.code").value(200))
                 .andExpect(jsonPath("$.message").value("OK"));
     }
 
@@ -65,7 +67,7 @@ class LoadMemberControllerTest {
         mockMvc.perform(get("/api/admin/users")
                         .contentType(
                                 MediaType.APPLICATION_JSON)
-                        .header("Authentication", "MEMBER")
+                        .header(HttpHeaders.AUTHORIZATION, "MEMBER")
                 ).andDo(print())
                 .andExpect(status().isForbidden());
     }

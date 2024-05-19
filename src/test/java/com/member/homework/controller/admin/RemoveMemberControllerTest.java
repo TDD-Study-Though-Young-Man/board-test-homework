@@ -1,8 +1,7 @@
-package com.member.homework.controller;
+package com.member.homework.controller.admin;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.member.homework.controller.admin.GrantRoleController;
-import com.member.homework.service.GrantRoleService;
+import com.member.homework.controller.admin.RemoveMemberController;
+import com.member.homework.service.admin.RemoveMemberService;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -16,69 +15,57 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import static com.member.homework.exception.ErrorCode.PARAMETER_INVALID;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @AutoConfigureMockMvc(addFilters = false)
-@WebMvcTest(controllers = GrantRoleController.class)
+@WebMvcTest(controllers = RemoveMemberController.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class GrantRoleControllerTest {
+class RemoveMemberControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private GrantRoleService grantRoleService;
-
-    @Autowired
-    private ObjectMapper objectMapper;
+    private RemoveMemberService removeMemberService;
 
     @Test
-    void 사용자에게_권한을_부여한다() throws Exception {
+    void 회원을_삭제한다() throws Exception {
 
         // given
         Long userId = 1L;
 
-        List<String> result = List.of("MEMBER");
-
-        //when
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/users/{userId}/roles", userId)
-                .content(objectMapper.writeValueAsString(result))
-                .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding(StandardCharsets.UTF_8));
+        // when
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.delete("/api/admin/users/{userId}", userId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding(StandardCharsets.UTF_8));
 
         //then
         resultActions.andDo(print())
-                .andExpect(jsonPath("$.data").isNumber())
                 .andExpect(jsonPath("$.data").value(userId))
                 .andExpect(jsonPath("$.code").value(HttpStatus.OK.value()));
     }
 
     @Test
-    void 사용자에게_권한을_부여하려면_0이상의_아이디를_가져야_한다() throws Exception {
+    void 회원을_삭제하려면_0이상의_아이디를_가져야_한다() throws Exception {
 
         // given
         Long userId = -1L;
 
-        List<String> result = List.of("MEMBER");
+        // when
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.delete("/api/admin/users/{userId}", userId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding(StandardCharsets.UTF_8));
 
-        //when
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/admin/users/{userId}/roles", userId)
-                .content(objectMapper.writeValueAsString(result))
-                .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding(StandardCharsets.UTF_8));
-
-        //then
+        // then
         resultActions.andDo(print())
                 .andExpect(jsonPath("$.code").value(BAD_REQUEST.value()))
                 .andExpect(jsonPath("$.data").value(PARAMETER_INVALID.getDetail()));
 
-        verify(grantRoleService, never()).grantRoleToMember(userId, result);
-
+        verify(removeMemberService, never()).removeMember(userId);
     }
 }

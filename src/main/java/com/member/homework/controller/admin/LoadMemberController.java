@@ -1,6 +1,6 @@
-package com.member.homework.controller;
+package com.member.homework.controller.admin;
 
-import com.member.homework.common.BaseResponse;
+import com.member.homework.common.dto.ApiResponse;
 import com.member.homework.dto.response.MemberDto;
 import com.member.homework.service.admin.LoadMemberService;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +17,9 @@ public class LoadMemberController {
     private final LoadMemberService loadMemberService;
 
     @GetMapping("/api/admin/users")
-    public ResponseEntity<BaseResponse<List<MemberDto>>> loadAllMembers() {
+    public ResponseEntity<ApiResponse<List<MemberDto>>> loadAllMembers() {
         return ResponseEntity.ok(
-                BaseResponse.ok(loadMemberService.loadAllMembers())
+                ApiResponse.ok(loadMemberService.loadAllMembers())
         );
     }
 }
